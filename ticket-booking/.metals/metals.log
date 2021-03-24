@@ -1,0 +1,179 @@
+[0m2021.03.24 19:27:27 INFO  Started: Metals version 0.10.0 in workspace '/Users/rochala/Praca/ticket-booking/ticket-booking' for client Neovim 0.5.0.[0m
+[0m2021.03.24 19:27:29 INFO  time: initialize in 2.58s[0m
+[0m2021.03.24 19:27:29 WARN  Build server is not auto-connectable.[0m
+[0m2021.03.24 19:27:30 INFO  Selected port 5031[0m
+[0m2021.03.24 19:27:29 WARN  no build target for: /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala[0m
+Mar 24, 2021 7:27:30 PM io.undertow.Undertow start
+INFO: starting server: Undertow - 2.2.4.Final
+Mar 24, 2021 7:27:30 PM org.xnio.Xnio <clinit>
+INFO: XNIO version 3.8.4.Final
+Mar 24, 2021 7:27:30 PM org.xnio.nio.NioXnio <clinit>
+INFO: XNIO NIO Implementation Version 3.8.4.Final
+Mar 24, 2021 7:27:31 PM org.jboss.threads.Version <clinit>
+INFO: JBoss Threads version 3.1.0.Final
+[0m2021.03.24 19:27:30 INFO  Started Metals http server at http://127.0.0.1:5031[0m
+[0m2021.03.24 19:27:35 INFO  running '/Library/Java/JavaVirtualMachines/jdk-11.0.8.jdk/Contents/Home/bin/java -Djline.terminal=jline.UnsupportedTerminal -Dsbt.log.noformat=true -Dfile.encoding=UTF-8 -jar /var/folders/44/zlr9pw9d4flgcny81yb0snvr0000gn/T/metals10553592718112689950/sbt-launch.jar -Dbloop.export-jar-classifiers=sources bloopInstall'[0m
+[0m2021.03.24 19:27:35 INFO  no build target: using presentation compiler with only scala-library: 2.12.13[0m
+[0m2021.03.24 19:27:38 INFO  [info] welcome to sbt 1.4.9 (Oracle Corporation Java 11.0.8)[0m
+object Main extends App {
+  println("Hello, World!")
+}
+
+[0m2021.03.24 19:27:42 INFO  [info] loading settings for project ticket-booking-build-build from metals.sbt ...[0m
+[0m2021.03.24 19:27:43 INFO  [info] loading project definition from /Users/rochala/Praca/ticket-booking/ticket-booking/project/project[0m
+[0m2021.03.24 19:27:46 INFO  [info] loading settings for project ticket-booking-build from metals.sbt ...[0m
+[0m2021.03.24 19:27:46 INFO  [info] loading project definition from /Users/rochala/Praca/ticket-booking/ticket-booking/project[0m
+[0m2021.03.24 19:27:48 INFO  [success] Generated .bloop/ticket-booking-build.json[0m
+[0m2021.03.24 19:27:48 INFO  [success] Total time: 2 s, completed Mar 24, 2021, 7:27:48 PM[0m
+[0m2021.03.24 19:27:50 INFO  [info] loading settings for project ticket-booking from build.sbt ...[0m
+[0m2021.03.24 19:27:50 INFO  [info] set current project to hello-world (in build file:/Users/rochala/Praca/ticket-booking/ticket-booking/)[0m
+[0m2021.03.24 19:27:50 INFO  [success] Generated .bloop/ticket-booking-test.json[0m
+[0m2021.03.24 19:27:50 INFO  [success] Generated .bloop/ticket-booking.json[0m
+[0m2021.03.24 19:27:50 INFO  [success] Total time: 0 s, completed Mar 24, 2021, 7:27:51 PM[0m
+[0m2021.03.24 19:27:50 INFO  sbt bloopInstall exit: 0[0m
+[0m2021.03.24 19:27:51 INFO  time: ran 'sbt bloopInstall' in 16s[0m
+[0m2021.03.24 19:27:51 INFO  Attempting to connect to the build server...[0m
+Starting the bsp launcher for bloop...
+Opening a bsp server connection with 'bsp --protocol local --socket /var/folders/44/zlr9pw9d4flgcny81yb0snvr0000gn/T/bsp-launcher7724003892702430273/bsp.socket'...
+Waiting for the bsp connection to come up...
+Waiting for the bsp connection to come up...
+Waiting for the bsp connection to come up...
+Waiting for the bsp connection to come up...
+No server running at 127.0.0.1:8212, let's fire one...
+Resolving ch.epfl.scala:bloop-frontend_2.12:1.4.8...
+Starting bloop server at 127.0.0.1:8212...
+Attempting a connection to the server...
+Attempting a connection to the server...
+Attempting a connection to the server...
+Attempting a connection to the server...
+Attempting a connection to the server...
+Attempting a connection to the server...
+Attempting a connection to the server...
+Attempting a connection to the server...
+Attempting a connection to the server...
+[0m[32m[D][0m Waiting for a connection at local:///var/folders/44/zlr9pw9d4flgcny81yb0snvr0000gn/T/bsp-launcher7724003892702430273/bsp.socket...
+The server is listening for incoming connections at local:///var/folders/44/zlr9pw9d4flgcny81yb0snvr0000gn/T/bsp-launcher7724003892702430273/bsp.socket...
+Starting thread that pumps stdin and redirects it to the bsp server...
+Starting thread that pumps server stdout and redirects it to the client stdout...
+[0m2021.03.24 19:27:55 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /Users/rochala/Library/Caches/org.scalameta.metals/bsp.trace.json[0m
+[0m2021.03.24 19:27:55 INFO  Attempting to connect to the build server...[0m
+Starting the bsp launcher for bloop...
+Opening a bsp server connection with 'bsp --protocol local --socket /var/folders/44/zlr9pw9d4flgcny81yb0snvr0000gn/T/bsp-launcher722792078963983889/bsp.socket'...
+Waiting for the bsp connection to come up...
+[0m[32m[D][0m Waiting for a connection at local:///var/folders/44/zlr9pw9d4flgcny81yb0snvr0000gn/T/bsp-launcher722792078963983889/bsp.socket...
+The server is listening for incoming connections at local:///var/folders/44/zlr9pw9d4flgcny81yb0snvr0000gn/T/bsp-launcher722792078963983889/bsp.socket...
+Starting thread that pumps stdin and redirects it to the bsp server...
+Starting thread that pumps server stdout and redirects it to the client stdout...
+[0m2021.03.24 19:27:55 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /Users/rochala/Library/Caches/org.scalameta.metals/bsp.trace.json[0m
+[0m2021.03.24 19:27:55 INFO  time: Connected to build server in 4.49s[0m
+[0m2021.03.24 19:27:55 INFO  Connected to Build server: Bloop v1.4.8[0m
+[0m2021.03.24 19:27:55 INFO  time: Imported build in 0.14s[0m
+[0m2021.03.24 19:28:01 INFO  time: indexed workspace in 5.85s[0m
+[0m2021.03.24 19:28:02 INFO  compiling ticket-booking (1 scala source)[0m
+[0m2021.03.24 19:28:08 INFO  time: compiled ticket-booking in 5.39s[0m
+[0m2021.03.24 19:28:20 INFO  compiling ticket-booking (1 scala source)[0m
+[0m2021.03.24 19:28:20 INFO  time: compiled ticket-booking in 0.3s[0m
+[0m2021.03.24 19:28:23 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:23 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:23 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:23 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:23 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:23 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:23 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:23 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:24 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:24 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:24 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:24 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:24 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:24 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:24 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:24 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:24 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:24 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:24 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:25 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:24 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:25 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:25 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:25 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:25 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:25 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:26 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:26 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:26 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:26 INFO  /Users/rochala/Praca/ticket-booking/ticket-booking/src/main/scala/Main.scala:3:3: stale bloop error: not found: value prin
+  prin
+  ^^^^[0m
+[0m2021.03.24 19:28:28 INFO  compiling ticket-booking (1 scala source)[0m
+[0m2021.03.24 19:28:28 INFO  time: compiled ticket-booking in 0.19s[0m
+[0m2021.03.24 19:28:31 INFO  compiling ticket-booking (1 scala source)[0m
+[0m2021.03.24 19:28:32 INFO  shutting down Metals[0m
+[0m2021.03.24 19:28:32 INFO  Shut down connection with build server.[0m
+[0m2021.03.24 19:28:32 INFO  Shut down connection with build server.[0m
+No more data in the client stdin, exiting...
+No more data in the client stdin, exiting...
+No more data in the server stdin, exiting...
+No more data in the server stdin, exiting...
+No more data in the server stdin, exiting...
+No more data in the server stdin, exiting...
+Mar 24, 2021 7:28:32 PM io.undertow.Undertow stop
+INFO: stopping server: Undertow - 2.2.4.Final
