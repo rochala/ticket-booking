@@ -45,6 +45,7 @@ project/plugins/project/
 .bsp
 
 ### Scala ###
+.metals/
 
 # End of https://www.toptal.com/developers/gitignore/api/scala,sbt,bloop,java
 
