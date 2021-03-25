@@ -4,12 +4,14 @@ import java.sql.Timestamp
 import slick.sql.SqlProfile.ColumnOption.SqlType
 import java.sql.Time
 
-case class Hall(id: Option[Long], name: String)
+case class Hall(id: Option[Long], name: String,rows: Int, columns: Int)
 
 class Halls(tag: Tag) extends Table[Hall](tag, "HALLS") {
   def id         = column[Long]("HALL_ID", O.PrimaryKey, O.AutoInc)
   def name       = column[String]("HALL_NAME")
-  override def * = (id.?, name).<>(Hall.tupled, Hall.unapply)
+  def rows = column[Int]("ROWS_NUMBER")
+  def columns = column[Int]("COLUMNS_NUMBER")
+  override def * = (id.?, name, rows, columns).<>(Hall.tupled, Hall.unapply)
 }
 
 case class Movie(id: Option[Long], imbdID: String, title: String, duration: Long)
@@ -29,7 +31,7 @@ class Screenings(tag: Tag) extends Table[Screening](tag, "SCREENINGS") {
   def hallID  = column[Long]("HALL_ID")
   def movieID = column[Long]("MOVIE_ID")
   def screeningTime = column[Timestamp](
-    "RESERVATION_TIME",
+    "SCREENING_TIME",
     SqlType("TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
   )
   override def * =
@@ -43,7 +45,8 @@ case class Reservation(
     screeningID: Long,
     name: String,
     surname: String,
-    reservationTime: Timestamp
+    reservationTime: Timestamp,
+    status: Boolean
 )
 
 class Reservations(tag: Tag) extends Table[Reservation](tag, "RESERVATIONS") {
@@ -51,12 +54,13 @@ class Reservations(tag: Tag) extends Table[Reservation](tag, "RESERVATIONS") {
   def screeningID = column[Long]("SCREENING_ID")
   def name        = column[String]("NAME")
   def surname     = column[String]("SURNAME")
+  def status = column[Boolean]("PAID")
   def reservatonTime = column[Timestamp](
     "RESERVATION_TIME",
     SqlType("TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
   )
   override def * =
-    (id.?, screeningID, name, surname, reservatonTime).<>(Reservation.tupled, Reservation.unapply)
+    (id.?, screeningID, name, surname, reservatonTime, status).<>(Reservation.tupled, Reservation.unapply)
   def screening = foreignKey("SCREENING_FK", screeningID, TableQuery[Screenings])(_.id)
 }
 
