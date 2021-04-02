@@ -24,7 +24,7 @@ class H2HallDataStorage(val databaseConnector: DatabaseConnector)(implicit execu
 
   def getHall(id: Long): Future[Option[Hall]] = db.run(halls.filter(_.id === id).result.headOption)
 
-  def populate() = db.run(halls ++= Seq(
+  private def populate() = db.run(halls ++= Seq(
             Hall(None, "Main hall", 18, 30),
             Hall(None, "Studio hall", 12, 20),
             Hall(None, "Small hall", 10, 15)

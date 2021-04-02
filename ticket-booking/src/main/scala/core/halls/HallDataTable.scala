@@ -3,7 +3,7 @@ package core.halls
 import core.Hall
 import utils.DatabaseConnector
 
-private[halls] trait HallDataTable {
+private[core] trait HallDataTable {
 
   protected val databaseConnector: DatabaseConnector
   import databaseConnector.profile.api._

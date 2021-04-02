@@ -1,4 +1,5 @@
 import java.sql.Timestamp
+import io.circe.generic.JsonCodec
 
 package object core {
 

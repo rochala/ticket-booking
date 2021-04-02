@@ -3,41 +3,52 @@ import java.sql.Time
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 // import scala.concurrent.ExecutionContext.Implicits.global
-import core.definitions._
+// import core.definitions._
 import core.halls._
 import java.sql.Timestamp
 import utils._
+import core.screenings._
 import scala.concurrent.ExecutionContext
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import http.HttpRoute
 import scala.util.Success
 import scala.util.Failure
+import scala.io.StdIn
+import akka.stream.ActorMaterializer
+import akka.util.Timeout
+import scala.concurrent.duration._
+import core.movies.MovieDataService
+import core.movies.H2MovieDataStorage
 
 object Boot extends App {
 
   def startApplication() = {
-    implicit val actorSystem = ActorSystem()
+    implicit val actorSystem                = ActorSystem()
     implicit val executor: ExecutionContext = actorSystem.dispatcher
+
 
     val databaseConnector = new DatabaseConnector()
 
     val hallDataStorage = new H2HallDataStorage(databaseConnector)
-    val hallsService = new HallDataService(hallDataStorage)
+    val hallsService    = new HallDataService(hallDataStorage)
 
-    val httpRoute = new HttpRoute(hallsService)
+    val movieDataStorage = new H2MovieDataStorage(databaseConnector)
+    val movieService = new MovieDataService(movieDataStorage)
 
-    val futureBinding = Http().newServerAt(Config.httpHost, Config.httpPort).bind(httpRoute.route)
+    val screeningDataStorage = new H2ScreeningStorage(databaseConnector)
+    val screeningService = new ScreeningService(screeningDataStorage)
 
-    futureBinding.onComplete {
-      case Success(binding) =>
-        val address = binding.localAddress
-        println(f"Server online at http://{}:{}/", Config.httpHost, Config.httpPort)
-      case Failure(ex) =>
-        actorSystem.log.error("Failed to bind HTTP endpoint, terminating system", ex)
-        actorSystem.terminate()
-    }
+    val httpRoute = new HttpRoute(hallsService, movieService, screeningService)
 
+    val bindingFuture = Http().bindAndHandle(httpRoute.route, Config.httpHost, Config.httpPort)
+
+    printf("Server online at http://%s:%d/\n", Config.httpHost, Config.httpPort)
+    println("Press RETURN to stop...")
+    StdIn.readLine() // let it run until user presses return
+    bindingFuture
+      .flatMap(_.unbind())                     // trigger unbinding from the port
+      .onComplete(_ ⇒ actorSystem.terminate()) // and shutdown when done
   }
 
   startApplication()
