@@ -19,7 +19,7 @@ trait ScreeningTable extends MovieDataTable with HallDataTable {
     def movieID = column[Long]("MOVIE_ID")
     def screeningTime = column[Timestamp](
       "SCREENING_TIME",
-      SqlType("TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+      SqlType("TIMESTAMP NOT NULL")
     )
     override def * =
       (id.?, hallID, movieID, screeningTime).<>(Screening.tupled, Screening.unapply)

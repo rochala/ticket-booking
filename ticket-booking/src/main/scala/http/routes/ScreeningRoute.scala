@@ -13,6 +13,8 @@ import java.sql.Timestamp
 import io.circe.Decoder
 import io.circe.Json
 import io.circe.HCursor
+import java.sql.Date
+import akka.http.scaladsl.model.DateTime
 
 class ScreeningRoute(screeningService: ScreeningService)(implicit executionContext: ExecutionContext)
     extends FailFastCirceSupport {
@@ -25,6 +27,14 @@ class ScreeningRoute(screeningService: ScreeningService)(implicit executionConte
 
     override def apply(c: HCursor): Decoder.Result[Timestamp] = Decoder.decodeLong.map(s => new Timestamp(s)).apply(c)
   }
+
+  implicit val DateFormat: Encoder[Date] with Decoder[Date] = new Encoder[Date]
+    with Decoder[Date] {
+    override def apply(a: Date): Json = Encoder.encodeLong.apply(a.getTime)
+
+    override def apply(c: HCursor): Decoder.Result[Date] = Decoder.decodeLong.map(s => new Date(s)).apply(c)
+  }
+
 
   val route = pathPrefix("screenings") {
     concat(
@@ -42,6 +52,13 @@ class ScreeningRoute(screeningService: ScreeningService)(implicit executionConte
               case None =>
                 BadRequest -> None.asJson
             })
+          }
+        }
+      },
+      path(LongNumber / LongNumber) { (start, end) =>
+        pathEndOrSingleSlash {
+          get {
+            complete(screeningSchedule(new Timestamp(start),new Timestamp(end)).map(_.asJson))
           }
         }
       }
