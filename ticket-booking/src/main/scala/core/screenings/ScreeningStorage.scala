@@ -23,8 +23,7 @@ sealed trait ScreeningStorage {
 }
 
 class H2ScreeningStorage(val databaseConnector: DatabaseConnector)(implicit executionContext: ExecutionContext)
-    extends ScreeningTable
-    with ScreeningStorage {
+    extends ScreeningTable with ScreeningStorage {
 
   import databaseConnector._
   import databaseConnector.profile.api._
@@ -39,6 +38,8 @@ class H2ScreeningStorage(val databaseConnector: DatabaseConnector)(implicit exec
 
   def getMoviesScreenings(startDate: Timestamp, endDate: Timestamp): Future[Seq[(Movie, Long, Timestamp)]] =
     db.run(joinQuery.filter(_._3.between(startDate, endDate)).sortBy(_._1.id).result)
+
+  def getScreeningDetails
 
   private def init() = db.run(
     DBIO.seq(

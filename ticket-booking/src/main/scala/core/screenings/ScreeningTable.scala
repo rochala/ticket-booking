@@ -8,7 +8,7 @@ import java.sql.Timestamp
 import slick.driver.H2Driver.api._
 import slick.sql.SqlProfile.ColumnOption.SqlType
 
-trait ScreeningTable extends MovieDataTable with HallDataTable {
+trait ScreeningTable extends MovieDataTable with HallDataTable with ReservationTable {
 
   protected val databaseConnector: DatabaseConnector
   import databaseConnector.profile.api._

@@ -28,6 +28,8 @@ class ScreeningService(screeningStorage: ScreeningStorage)(implicit executionCon
     }.toSeq
   }
 
+  def screeningDetails(id: Long) = {
+  }
 
 
 
