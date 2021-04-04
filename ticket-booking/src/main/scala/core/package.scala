@@ -15,7 +15,7 @@ package object core {
       name: String,
       surname: String,
       reservationTime: Timestamp,
-      status: Boolean
+      status: String
   )
 
   final case class Seat(id: Option[Long], reservationID: Long, row: Int, index: Int, price: Double)

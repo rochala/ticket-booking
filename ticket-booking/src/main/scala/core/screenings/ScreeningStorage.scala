@@ -39,40 +39,4 @@ class H2ScreeningStorage(val databaseConnector: DatabaseConnector)(implicit exec
   def getMoviesScreenings(startDate: Timestamp, endDate: Timestamp): Future[Seq[(Movie, Long, Timestamp)]] =
     db.run(joinQuery.filter(_._3.between(startDate, endDate)).sortBy(_._1.id).result)
 
-  def getScreeningDetails
-
-  private def init() = db.run(
-    DBIO.seq(
-      screenings.schema.create,
-      screenings ++= Seq(
-        Screening(None, 1, 1, new Timestamp(1616695200000L)),
-        Screening(None, 1, 1, new Timestamp(1616706000000L)),
-        Screening(None, 2, 2, new Timestamp(1616695200000L)),
-        Screening(None, 2, 2, new Timestamp(1616706000000L)),
-        Screening(None, 3, 3, new Timestamp(1616695200000L)),
-        Screening(None, 3, 3, new Timestamp(1616706000000L)),
-        Screening(None, 1, 4, new Timestamp(1616785200000L)),
-        Screening(None, 1, 4, new Timestamp(1616871600000L)),
-        Screening(None, 2, 5, new Timestamp(1616774400000L)),
-        Screening(None, 2, 5, new Timestamp(1616787000000L)),
-        Screening(None, 3, 6, new Timestamp(1616774400000L)),
-        Screening(None, 3, 6, new Timestamp(1616787000000L)),
-        Screening(None, 2, 6, new Timestamp(1616868000000L)),
-        Screening(None, 3, 6, new Timestamp(1616868000000L)),
-        Screening(None, 1, 7, new Timestamp(1616936400000L)),
-        Screening(None, 1, 8, new Timestamp(1616949000000L)),
-        Screening(None, 1, 9, new Timestamp(1616961600000L)),
-        Screening(None, 2, 8, new Timestamp(1616936400000L)),
-        Screening(None, 2, 9, new Timestamp(1616949000000L)),
-        Screening(None, 2, 7, new Timestamp(1616961600000L)),
-        Screening(None, 3, 9, new Timestamp(1616936400000L)),
-        Screening(None, 3, 7, new Timestamp(1616949000000L)),
-        Screening(None, 3, 8, new Timestamp(1616961600000L))
-      )
-    )
-  )
-
-  // Await.result(populate(), Duration.Inf)
-  init()
-  db.run(joinQuery.result).map(println)
 }

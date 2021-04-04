@@ -16,6 +16,7 @@ import io.circe.HCursor
 import java.sql.Date
 import akka.http.scaladsl.model.DateTime
 
+
 class ScreeningRoute(screeningService: ScreeningService)(implicit executionContext: ExecutionContext)
     extends FailFastCirceSupport {
   import StatusCodes._

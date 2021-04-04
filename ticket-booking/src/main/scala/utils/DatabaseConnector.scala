@@ -1,7 +1,7 @@
 package utils
 
 class DatabaseConnector {
-  val profile = slick.driver.H2Driver
+  val profile = slick.driver.PostgresDriver
 
   import profile.api._
 
