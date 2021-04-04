@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e0014218-5c09-4b28-91d3-3054b8fce662" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/ticket-booking/build.sbt" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-booking/build.sbt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-booking/src/main/resources/application.conf" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-booking/src/main/resources/application.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-booking/src/main/scala/core/definitions/Reservations.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-booking/src/main/scala/core/definitions/Reservations.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-booking/src/main/scala/core/halls/HallDataStorage.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-booking/src/main/scala/core/halls/HallDataStorage.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-booking/src/main/scala/core/halls/HallDataTable.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-booking/src/main/scala/core/halls/HallDataTable.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-booking/src/main/scala/core/movies/MovieDataStorage.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-booking/src/main/scala/core/movies/MovieDataStorage.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-booking/src/main/scala/core/movies/MovieDataTable.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-booking/src/main/scala/core/movies/MovieDataTable.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-booking/src/main/scala/core/package.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-booking/src/main/scala/core/package.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-booking/src/main/scala/core/reservations/ReservationService.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-booking/src/main/scala/core/reservations/ReservationService.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-booking/src/main/scala/core/reservations/ReservationStorage.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-booking/src/main/scala/core/reservations/ReservationStorage.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-booking/src/main/scala/core/reservations/ReservationTable.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-booking/src/main/scala/core/reservations/ReservationTable.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-booking/src/main/scala/core/screenings/ScreeningStorage.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-booking/src/main/scala/core/screenings/ScreeningStorage.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-booking/src/main/scala/core/screenings/ScreeningTable.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-booking/src/main/scala/core/screenings/ScreeningTable.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-booking/src/main/scala/http/routes/ScreeningRoute.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-booking/src/main/scala/http/routes/ScreeningRoute.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-booking/src/main/scala/utils/DatabaseConnector.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-booking/src/main/scala/utils/DatabaseConnector.scala" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="SBT">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ticket-booking" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ticket-booking" type="f1a62948:ProjectNode" />
+                <item name="ticket-booking" type="2d1252cf:ModuleNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="$APPLICATION_HOME_DIR$/plugins/maven/lib/maven3" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1qbjvGI8v7JjP5TnlGeuVtJz7n0" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e0014218-5c09-4b28-91d3-3054b8fce662" name="Default Changelist" comment="" />
+      <created>1617355417783</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1617355417783</updated>
+      <workItem from="1617355420486" duration="295000" />
+      <workItem from="1617468347998" duration="94000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="655" y="381" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1617355684251">
+      <screen x="0" y="23" width="1920" height="1013" />
+    </state>
+    <state x="655" y="381" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-1920.23.1920.1057/0.23.1920.1013@0.23.1920.1013" timestamp="1617355684251" />
+    <state x="469" y="168" key="SettingsEditor" timestamp="1617355706140">
+      <screen x="0" y="23" width="1920" height="1013" />
+    </state>
+    <state x="469" y="168" key="SettingsEditor/-1920.23.1920.1057/0.23.1920.1013@0.23.1920.1013" timestamp="1617355706140" />
+  </component>
+</project>
