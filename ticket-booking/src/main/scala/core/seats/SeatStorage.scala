@@ -25,19 +25,12 @@ class H2SeatStorage(val databaseConnector: DatabaseConnector)(implicit execution
     ((seat, reservation), screening) <- seats join reservations join screenings
   } yield (screening.id, seat)
 
+
   def getSeats(): Future[Seq[Seat]] = db.run(seats.result)
 
   def getSeat(id: Long): Future[Option[Seat]] = db.run(seats.filter(_.id === id).result.headOption)
 
   def avaliableSeats(screeningID: Long): Future[Seq[Seat]] =
-    db.run(joinQuery.filter(_._1 === screeningID).map(_._2).result)
+    db.run(joinQuery.filter(_._1 === screeningID).map(_._2).distinct.result)
 
-  private def init() = db.run(
-    DBIO.seq(
-      screenings.schema.create
-    )
-  )
-
-  db.run(halls.schema.create)
-  init()
 }

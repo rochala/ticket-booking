@@ -20,6 +20,10 @@ import akka.util.Timeout
 import scala.concurrent.duration._
 import core.movies.MovieDataService
 import core.movies.H2MovieDataStorage
+import core.reservations.H2ReservationStorage
+import core.reservations.ReservationService
+import core.seats.H2SeatStorage
+import core.seats.SeatService
 
 object Boot extends App {
 
@@ -39,7 +43,13 @@ object Boot extends App {
     val screeningDataStorage = new H2ScreeningStorage(databaseConnector)
     val screeningService = new ScreeningService(screeningDataStorage)
 
-    val httpRoute = new HttpRoute(hallsService, movieService, screeningService)
+    val reservationStorage = new H2ReservationStorage(databaseConnector)
+    val reservationService = new ReservationService(reservationStorage)
+
+    val seatStorage = new H2SeatStorage(databaseConnector)
+    val seatService = new SeatService(seatStorage)
+
+    val httpRoute = new HttpRoute(hallsService, movieService, screeningService, reservationService, seatService)
 
     val bindingFuture = Http().bindAndHandle(httpRoute.route, Config.httpHost, Config.httpPort)
 

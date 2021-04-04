@@ -37,6 +37,6 @@ class H2ScreeningStorage(val databaseConnector: DatabaseConnector)(implicit exec
   def getScreening(id: Long): Future[Option[Screening]] = db.run(screenings.filter(_.id === id).result.headOption)
 
   def getMoviesScreenings(startDate: Timestamp, endDate: Timestamp): Future[Seq[(Movie, Long, Timestamp)]] =
-    db.run(joinQuery.filter(_._3.between(startDate, endDate)).sortBy(_._1.id).result)
+    db.run(joinQuery.filter(_._3.between(startDate, endDate)).sortBy(_._3).result)
 
 }

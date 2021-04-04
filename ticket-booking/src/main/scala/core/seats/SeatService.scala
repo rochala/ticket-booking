@@ -8,4 +8,10 @@ class SeatService(seatStorage: SeatStorage)(implicit executionContext: Execution
   def getSeats(): Future[Seq[Seat]] = seatStorage.getSeats()
 
   def getSeat(id: Long): Future[Option[Seat]] = seatStorage.getSeat(id)
+
+  def avaliableSeats(screeningID: Long): Future[Seq[Seat]] = {
+    seatStorage.avaliableSeats(screeningID)
+  }
+
+
 }

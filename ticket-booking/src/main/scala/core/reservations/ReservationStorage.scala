@@ -13,7 +13,7 @@ sealed trait ReservationStorage {
 
 }
 
-class SQLiteReservationStorage(val databaseConnector: DatabaseConnector)(implicit executionContext: ExecutionContext)
+class H2ReservationStorage(val databaseConnector: DatabaseConnector)(implicit executionContext: ExecutionContext)
     extends ReservationStorage
     with ReservationTable {
 

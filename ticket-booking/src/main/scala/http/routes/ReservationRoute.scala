@@ -11,16 +11,19 @@ import core.reservations.ReservationService
 import io.circe.Encoder
 import java.sql.Timestamp
 
-class ReservationRoute(reservationService: ReservationService)(implicit executionContext: ExecutionContext, encoder: Encoder[Timestamp]) extends FailFastCirceSupport {
+class ReservationRoute(reservationService: ReservationService)(implicit
+    executionContext: ExecutionContext,
+    encoder: Encoder[Timestamp]
+) extends FailFastCirceSupport {
   import StatusCodes._
   import reservationService._
 
   val route = pathPrefix("reservations") {
     concat(
       pathEndOrSingleSlash {
-          get {
-            complete(getReservations().map(_.asJson))
-          }
+        get {
+          complete(getReservations().map(_.asJson))
+        }
       },
       path(LongNumber) { id =>
         pathEndOrSingleSlash {
@@ -30,11 +33,10 @@ class ReservationRoute(reservationService: ReservationService)(implicit executio
                 OK -> reservation.asJson
               case None =>
                 BadRequest -> None.asJson
-            }
-            )
+            })
           }
         }
       }
-      )
+    )
   }
-  }
+}

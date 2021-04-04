@@ -29,13 +29,6 @@ class ScreeningRoute(screeningService: ScreeningService)(implicit executionConte
     override def apply(c: HCursor): Decoder.Result[Timestamp] = Decoder.decodeLong.map(s => new Timestamp(s)).apply(c)
   }
 
-  implicit val DateFormat: Encoder[Date] with Decoder[Date] = new Encoder[Date]
-    with Decoder[Date] {
-    override def apply(a: Date): Json = Encoder.encodeLong.apply(a.getTime)
-
-    override def apply(c: HCursor): Decoder.Result[Date] = Decoder.decodeLong.map(s => new Date(s)).apply(c)
-  }
-
 
   val route = pathPrefix("screenings") {
     concat(

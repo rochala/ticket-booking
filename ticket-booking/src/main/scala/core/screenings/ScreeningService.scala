@@ -25,7 +25,7 @@ class ScreeningService(screeningStorage: ScreeningStorage)(implicit executionCon
     .map{
       case (x,y) =>
         MovieSchedule(x, y.map(e => ScreeningHeader(e._2, e._3)))
-    }.toSeq
+    }.toSeq.sortBy(_.movie.title)
   }
 
   def screeningDetails(id: Long) = {

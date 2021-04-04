@@ -26,7 +26,7 @@ CREATE TABLE RESERVATIONS(
     ID SERIAL PRIMARY KEY,
     screeningID INT NOT NULL REFERENCES SCREENINGS(ID),
     name TEXT NOT NULL, surname TEXT NOT NULL,
-    status CHAR(10) NOT NULL,
+    status VARCHAR(10) NOT NULL,
     reservation_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -35,8 +35,7 @@ CREATE TABLE SEATS(
     reservationID INT NOT NULL REFERENCES RESERVATIONS(ID),
     row_num INT NOT NULL,
     seat_index INT NOT NULL,
-    price FLOAT NOT NULL
-);
+    price FLOAT NOT NULL);
 
 INSERT INTO MOVIES (imdbID, title, duration)
 VALUES
@@ -80,5 +79,31 @@ VALUES
     (2, 7,to_timestamp(1616961600)),
     (3, 9,to_timestamp(1616936400)),
     (3, 7,to_timestamp(1616949000)),
-    (3, 8,to_timestamp(1616961600));
+    (3, 8,to_timestamp(1616961600)),
+    (3, 8,to_timestamp(1606961600));
+
+INSERT INTO RESERVATIONS (screeningid, name, surname, status)
+VALUES
+    (93, 'TestName1', 'TestName1', 'PAID'),
+    (93, 'TestName2', 'TestName2', 'PAID'),
+    (93, 'TestName3', 'TestName3', 'PAID'),
+    (93, 'TestName4', 'TestName4', 'PAID');
+
+INSERT INTO SEATS (reservationid, row_num, seat_index, price)
+VALUES
+    (9, 0, 0, 18.0),
+    (9, 0, 1, 18.0),
+    (9, 0, 2, 18.0),
+    (9, 0, 3, 18.0),
+    (10, 1, 3, 25.0),
+    (10, 1, 4, 15.0),
+    (10, 1, 5, 25.0),
+    (11, 7, 8, 25.0),
+    (11, 7, 9, 25.0),
+    (11, 7, 10, 25.0),
+    (12, 4, 7, 25.0),
+    (12, 4, 8, 25.0),
+    (12, 4, 9, 25.0),
+    (12, 4, 10, 25.0);
+
 

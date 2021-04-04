@@ -14,7 +14,7 @@ private[core] trait SeatTable extends ReservationTable {
 
   class Seats(tag: Tag) extends Table[Seat](tag, "seats") {
 
-    def id            = column[Long]("seatid", O.PrimaryKey, O.AutoInc)
+    def id            = column[Long]("id", O.PrimaryKey, O.AutoInc)
     def reservationID = column[Long]("reservationid")
     def row           = column[Int]("row_num")
     def index         = column[Int]("seat_index")

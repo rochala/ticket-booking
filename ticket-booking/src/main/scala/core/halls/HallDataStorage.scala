@@ -4,8 +4,9 @@ import core.Hall
 import utils.DatabaseConnector
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext
+import core.BaseStorage
 
-sealed trait HallDataStorage {
+sealed trait HallDataStorage extends BaseStorage {
   def getHalls(): Future[Seq[Hall]]
 
   def getHall(id: Long): Future[Option[Hall]]
@@ -13,8 +14,7 @@ sealed trait HallDataStorage {
 }
 
 class H2HallDataStorage(val databaseConnector: DatabaseConnector)(implicit executionContext: ExecutionContext)
-    extends HallDataTable
-    with HallDataStorage {
+    extends HallDataStorage {
 
   import databaseConnector._
   import databaseConnector.profile.api._
