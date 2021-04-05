@@ -40,14 +40,15 @@ object Boot extends App {
     val movieDataStorage = new H2MovieDataStorage(databaseConnector)
     val movieService = new MovieDataService(movieDataStorage)
 
-    val screeningDataStorage = new H2ScreeningStorage(databaseConnector)
-    val screeningService = new ScreeningService(screeningDataStorage)
-
-    val reservationStorage = new H2ReservationStorage(databaseConnector)
-    val reservationService = new ReservationService(reservationStorage)
-
     val seatStorage = new H2SeatStorage(databaseConnector)
     val seatService = new SeatService(seatStorage)
+
+    val screeningDataStorage = new H2ScreeningStorage(databaseConnector)
+    val screeningService = new ScreeningService(screeningDataStorage, seatStorage)
+
+    val reservationStorage = new H2ReservationStorage(databaseConnector)
+    val reservationService = new ReservationService(reservationStorage, seatStorage)
+
 
     val httpRoute = new HttpRoute(hallsService, movieService, screeningService, reservationService, seatService)
 

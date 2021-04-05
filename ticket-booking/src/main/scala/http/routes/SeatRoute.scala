@@ -36,19 +36,7 @@ class SeatRoute(seatService: SeatService)(implicit
             })
           }
         }
-      },
-      pathPrefix("avaliable") {
-        path(LongNumber) { id =>
-          pathEndOrSingleSlash {
-            get {
-              complete(avaliableSeats(id).map(_.asJson))
-            }
-          }
-
-        }
-
       }
-
     )
   }
 }

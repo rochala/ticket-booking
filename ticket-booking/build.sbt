@@ -15,9 +15,8 @@ libraryDependencies ++= Seq(
   "org.postgresql" % "postgresql" % "42.1.4",
   "org.slf4j" % "slf4j-nop" % "1.6.4",
   "com.typesafe.slick" %% "slick-hikaricp" % "3.3.3",
-  "com.github.tototoshi" %% "slick-joda-mapper" % "2.4.2",
-  "joda-time" % "joda-time" % "2.7",
-  "org.joda" % "joda-convert" % "1.7",
+  "com.github.tminglei" %% "slick-pg" % "0.19.5",
+  "com.github.tminglei" %% "slick-pg_circe-json" % "0.19.5",
 
 
 
