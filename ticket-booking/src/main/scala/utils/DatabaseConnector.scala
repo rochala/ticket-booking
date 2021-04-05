@@ -1,11 +1,11 @@
 package utils
 
 class DatabaseConnector {
-  val profile = slick.driver.PostgresDriver
+  val profile = slick.jdbc.PostgresProfile
 
   import profile.api._
 
-  val db = Database.forConfig("database")
+  val db: profile.backend.DatabaseDef = Database.forConfig("database")
 
   db.createSession()
 }

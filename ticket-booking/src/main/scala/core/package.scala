@@ -1,6 +1,4 @@
-import java.sql.Timestamp
-import io.circe.generic.JsonCodec
-import java.sql.Time
+import java.sql.{Time, Timestamp}
 
 package object core {
 
@@ -11,13 +9,14 @@ package object core {
   final case class Screening(id: Option[Long], hallID: Long, movieID: Long, screeningTime: Timestamp)
 
   final case class Reservation(
-      id: Option[Long],
-      screeningID: Long,
-      name: String,
-      surname: String,
-      reservationTime: Timestamp,
-      status: String
-  )
+                                id: Option[Long],
+                                screeningID: Long,
+                                name: String,
+                                surname: String,
+                                reservationTime: Timestamp,
+                                status: String
+                              )
 
   final case class Seat(id: Option[Long], reservationID: Long, row: Int, index: Int, price: Double)
+
 }

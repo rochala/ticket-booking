@@ -1,18 +1,14 @@
 package core.screenings
 
-import core.Screening
-import utils.DatabaseConnector
-import scala.concurrent.Future
-import scala.concurrent.ExecutionContext
 import java.sql.Timestamp
-import java.sql.Date
-import scala.concurrent.duration.Duration
-import scala.concurrent.Await
-import core.Movie
-import core.Hall
+
+import core.{Hall, Movie, Screening}
+import utils.DatabaseConnector
+
+import scala.concurrent.{ExecutionContext, Future}
 
 sealed trait ScreeningStorage {
-  def getScreenings(): Future[Seq[Screening]]
+  def getScreenings: Future[Seq[Screening]]
 
   def getScreening(id: Long): Future[Option[Screening]]
 
@@ -22,7 +18,7 @@ sealed trait ScreeningStorage {
 }
 
 class H2ScreeningStorage(val databaseConnector: DatabaseConnector)(implicit executionContext: ExecutionContext)
-    extends ScreeningTable
+  extends ScreeningTable
     with ScreeningStorage {
 
   import databaseConnector._
@@ -36,7 +32,7 @@ class H2ScreeningStorage(val databaseConnector: DatabaseConnector)(implicit exec
     ((s, m), h) <- screenings join movies join halls
   } yield (s, m, h)
 
-  def getScreenings(): Future[Seq[Screening]] = db.run(screenings.result)
+  def getScreenings: Future[Seq[Screening]] = db.run(screenings.result)
 
   def getScreening(id: Long): Future[Option[Screening]] = db.run(screenings.filter(_.id === id).result.headOption)
 

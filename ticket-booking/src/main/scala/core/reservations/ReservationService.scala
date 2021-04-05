@@ -1,60 +1,49 @@
 package core.reservations
 
-import core.Reservation
-import scala.concurrent.ExecutionContext
-import scala.concurrent.Future
-import core.seats.SeatStorage
-import core.screenings.ScreeningStorage
-import scala.concurrent.duration.Duration
-import scala.concurrent.Await
 import java.sql.Timestamp
 import java.util.Calendar
-import core.Seat
+
+import core.{Reservation, Seat}
+import core.screenings.ScreeningStorage
+import core.seats.SeatStorage
+
+import scala.annotation.tailrec
+import scala.concurrent.{Await, ExecutionContext, Future}
+import scala.concurrent.duration.Duration
 
 class ReservationService(
-    reservationStorage: ReservationStorage,
-    seatStorage: SeatStorage,
-    screeningStorage: ScreeningStorage
-)(implicit executionContext: ExecutionContext) {
-  def getReservations(): Future[Seq[Reservation]] = reservationStorage.getReservations()
+                          reservationStorage: ReservationStorage,
+                          seatStorage: SeatStorage,
+                          screeningStorage: ScreeningStorage
+                        )(implicit executionContext: ExecutionContext) {
+  def getReservations: Future[Seq[Reservation]] = reservationStorage.getReservations
 
   def getReservation(id: Long): Future[Option[Reservation]] = reservationStorage.getReservation(id)
-
-  case class ReservationForm(screeningID: Long, name: String, surname: String, seats: List[SeatForm])
-  case class SeatForm(row: Int, index: Int, ticketType: String)
-  case class ReservationSummary(
-      reservationID: Long,
-      totalPrice: Double,
-      reservedUntill: Timestamp,
-  )
 
   def makeReservation(reservationForm: ReservationForm): Future[Option[ReservationSummary]] = {
     def ticketTypeMapper(ticketType: String): Double =
       ticketType match {
-        case "adult"   => 25.0
+        case "adult" => 25.0
         case "student" => 18.0
-        case "child"   => 12.5
-        case _         => -1.0
+        case "child" => 12.5
+        case _ => -1.0
       }
 
     def checkReservationTime(reservationTime: Timestamp): Boolean = {
       val screening = Await.result(screeningStorage.getScreening(reservationForm.screeningID), Duration.Inf)
       screening match {
-        case Some(screening) => {
-          // println(screening.screeningTime)
-          // println(reservationTime)
-          (reservationTime.getTime() + (15 * 60 * 1000)) < screening.screeningTime.getTime()
-        }
+        case Some(screening) => (reservationTime.getTime + (15 * 60 * 1000)) < screening.screeningTime.getTime
         case None => false
       }
     }
 
     def checkFullName(): Boolean = {
       reservationForm.name.matches("""^\p{Lu}[\p{L}&&[^\p{Lu}]]{2,}""") &&
-      reservationForm.surname.matches("""^\p{Lu}[\p{L}&&[^\p{Lu}]]{2,}(-\p{Lu}[\p{L}&&[^\p{Lu}]]{2,})?""")
+        reservationForm.surname.matches("""^\p{Lu}[\p{L}&&[^\p{Lu}]]{2,}(-\p{Lu}[\p{L}&&[^\p{Lu}]]{2,})?""")
     }
 
     def checkRowsValues(seats: List[Seat]): Boolean = {
+      @tailrec
       def checkFreeSpace(seats: List[Seat], previous: Seat): Boolean = {
         seats match {
           case Nil => true
@@ -64,21 +53,18 @@ class ReservationService(
       }
 
       val screeningData = Await.result(screeningStorage.getScreeningDetails(reservationForm.screeningID), Duration.Inf)
-      if (screeningData == None) return false
+      if (screeningData.isEmpty) return false
 
       //check indices
       if (
-        !seats.foldLeft(true)((acc, seat) => acc && (
-          seat.row < screeningData.get._3.rows
-            && seat.row >= 0
-            && seat.index < screeningData.get._3.columns
-            && seat.index >= 0
-          )
-        )
+        !seats.forall(seat => seat.row < screeningData.get._3.rows
+          && seat.row >= 0
+          && seat.index < screeningData.get._3.columns
+          && seat.index >= 0)
       ) return false
 
       //check if prices were good
-      if (!seats.foldLeft(true)(_ && _.price >= 0)) return false
+      if (!seats.forall(_.price >= 0)) return false
 
       val seatsQueryResult =
         (Await.result(seatStorage.takenSeats(reservationForm.screeningID), Duration.Inf) ++ seats)
@@ -90,11 +76,11 @@ class ReservationService(
       checkFreeSpace(seatsQueryResult.toList.tail, seatsQueryResult.head)
     }
 
-    val reservationTime = new Timestamp(Calendar.getInstance().getTimeInMillis())
+    val reservationTime = new Timestamp(Calendar.getInstance().getTimeInMillis)
     if (
       reservationForm.seats.isEmpty ||
-      // !checkReservationTime(reservationTime) ||
-      !checkFullName()
+        // !checkReservationTime(reservationTime) ||
+        !checkFullName()
     ) return Future(None)
 
     val seatsWithoutID = reservationForm.seats.map(s => Seat(None, 0, s.row, s.index, ticketTypeMapper(s.ticketType)))
@@ -124,5 +110,15 @@ class ReservationService(
     // println(checkReservationTime(93, Timestamp.valueOf("2021-03-25 19:01:00.0")))
     Future(Some(ReservationSummary(reservation.id.get, totalPrice, reservationTime)))
   }
+
+  case class ReservationForm(screeningID: Long, name: String, surname: String, seats: List[SeatForm])
+
+  case class SeatForm(row: Int, index: Int, ticketType: String)
+
+  case class ReservationSummary(
+                                 reservationID: Long,
+                                 totalPrice: Double,
+                                 reservedUntil: Timestamp,
+                               )
 
 }

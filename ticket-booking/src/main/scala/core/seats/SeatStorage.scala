@@ -2,11 +2,11 @@ package core.seats
 
 import core.Seat
 import utils.DatabaseConnector
-import scala.concurrent.Future
-import scala.concurrent.ExecutionContext
+
+import scala.concurrent.{ExecutionContext, Future}
 
 sealed trait SeatStorage {
-  def getSeats(): Future[Seq[Seat]]
+  def getSeats: Future[Seq[Seat]]
 
   def getSeat(id: Long): Future[Option[Seat]]
 
@@ -15,7 +15,7 @@ sealed trait SeatStorage {
 }
 
 class H2SeatStorage(val databaseConnector: DatabaseConnector)(implicit executionContext: ExecutionContext)
-    extends SeatTable
+  extends SeatTable
     with SeatStorage {
 
   import databaseConnector._
@@ -26,7 +26,7 @@ class H2SeatStorage(val databaseConnector: DatabaseConnector)(implicit execution
       seats join reservations on (_.reservationID === _.id)
   } yield (reservation.screeningID, seat)
 
-  def getSeats(): Future[Seq[Seat]] = db.run(seats.result)
+  def getSeats: Future[Seq[Seat]] = db.run(seats.result)
 
   def getSeat(id: Long): Future[Option[Seat]] = db.run(seats.filter(_.id === id).result.headOption)
 

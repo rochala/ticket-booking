@@ -1,25 +1,20 @@
 package core.screenings
 
-import core.Screening
-import scala.concurrent.ExecutionContext
-import scala.concurrent.Future
-import java.sql.Date
 import java.sql.Timestamp
-import scala.concurrent.duration.Duration
-import scala.concurrent.Await
-import core.Movie
+
+import core.{Hall, Movie, Screening}
 import core.seats.SeatStorage
-import core.Hall
+
+import scala.concurrent.{Await, ExecutionContext, Future}
+import scala.concurrent.duration.Duration
 
 class ScreeningService(screeningStorage: ScreeningStorage, seatStorage: SeatStorage)(implicit
-    executionContext: ExecutionContext
+                                                                                     executionContext: ExecutionContext
 ) {
-  def allScreenings(): Future[Seq[Screening]] = screeningStorage.getScreenings()
+  def allScreenings: Future[Seq[Screening]] = screeningStorage.getScreenings
 
   def getScreening(id: Long): Future[Option[Screening]] = screeningStorage.getScreening(id)
 
-  case class ScreeningHeader(id: Long, screeningTime: Timestamp)
-  case class MovieSchedule(movie: Movie, screenings: Seq[ScreeningHeader])
   def screeningSchedule(startDate: Timestamp, endDate: Timestamp): Seq[MovieSchedule] = {
     Await
       .result(
@@ -35,18 +30,11 @@ class ScreeningService(screeningStorage: ScreeningStorage, seatStorage: SeatStor
       .sortBy(_.movie.title)
   }
 
-  case class ScreeningDetails(
-      id: Long,
-      screeningTime: Timestamp,
-      movie: Movie,
-      hall: Hall,
-      avaliableSeats: Array[Array[Boolean]]
-  )
   def screeningDetails(id: Long): Future[Option[ScreeningDetails]] = {
     val screeningData = Await.result(screeningStorage.getScreeningDetails(id), Duration.Inf)
-    if (screeningData == None) return Future(None)
+    if (screeningData.isEmpty) return Future(None)
 
-    val takenSeats     = Await.result(seatStorage.takenSeats(id), Duration.Inf)
+    val takenSeats = Await.result(seatStorage.takenSeats(id), Duration.Inf)
     val avaliableSeats = Array.ofDim[Boolean](screeningData.get._3.rows, screeningData.get._3.columns).map(_.map(!_))
 
     takenSeats.foreach(seat => avaliableSeats(seat.row)(seat.index) = false)
@@ -63,4 +51,16 @@ class ScreeningService(screeningStorage: ScreeningStorage, seatStorage: SeatStor
       )
     )
   }
+
+  case class ScreeningHeader(id: Long, screeningTime: Timestamp)
+
+  case class MovieSchedule(movie: Movie, screenings: Seq[ScreeningHeader])
+
+  case class ScreeningDetails(
+                               id: Long,
+                               screeningTime: Timestamp,
+                               movie: Movie,
+                               hall: Hall,
+                               availableSeats: Array[Array[Boolean]]
+                             )
 }

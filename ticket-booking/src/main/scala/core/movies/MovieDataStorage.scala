@@ -2,11 +2,11 @@ package core.movies
 
 import core.Movie
 import utils.DatabaseConnector
-import scala.concurrent.Future
-import scala.concurrent.ExecutionContext
+
+import scala.concurrent.{ExecutionContext, Future}
 
 sealed trait MovieDataStorage {
-  def getMovies(): Future[Seq[Movie]]
+  def getMovies: Future[Seq[Movie]]
 
   def getMovie(id: Long): Future[Option[Movie]]
 
@@ -15,13 +15,13 @@ sealed trait MovieDataStorage {
 }
 
 class H2MovieDataStorage(val databaseConnector: DatabaseConnector)(implicit executionContext: ExecutionContext)
-    extends MovieDataTable
+  extends MovieDataTable
     with MovieDataStorage {
 
   import databaseConnector._
   import databaseConnector.profile.api._
 
-  def getMovies(): Future[Seq[Movie]] = db.run(movies.result)
+  def getMovies: Future[Seq[Movie]] = db.run(movies.result)
 
   def getMovie(id: Long): Future[Option[Movie]] = db.run(movies.filter(_.id === id).result.headOption)
 

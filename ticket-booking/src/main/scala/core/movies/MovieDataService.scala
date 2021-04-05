@@ -1,11 +1,11 @@
 package core.movies
 
 import core.Movie
-import scala.concurrent.ExecutionContext
-import scala.concurrent.Future
+
+import scala.concurrent.{ExecutionContext, Future}
 
 class MovieDataService(movieDataStorage: MovieDataStorage)(implicit executionContext: ExecutionContext) {
-  def getMovies(): Future[Seq[Movie]] = movieDataStorage.getMovies()
+  def getMovies: Future[Seq[Movie]] = movieDataStorage.getMovies
 
   def getMovie(id: Long): Future[Option[Movie]] = movieDataStorage.getMovie(id)
 

@@ -1,28 +1,31 @@
 package http.routes
 
-import core.movies.MovieDataService
-import scala.concurrent.ExecutionContext
-import akka.http.scaladsl.model.StatusCodes
-import akka.http.scaladsl.server.Directives._
-
-import io.circe.generic.auto._
-import io.circe.syntax._
-import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
-import io.circe.Encoder
 import java.sql.Time
 
+import akka.http.scaladsl.model.StatusCodes
+import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server.Route
+import core.movies.MovieDataService
+import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
+import io.circe.Encoder
+import io.circe.generic.auto._
+import io.circe.syntax._
+
+import scala.concurrent.ExecutionContext
+
 class MovieRoute(movieService: MovieDataService)(implicit
-    executionContext: ExecutionContext,
-    dateEncoder: Encoder[Time]
+                                                 executionContext: ExecutionContext,
+                                                 dateEncoder: Encoder[Time]
 ) extends FailFastCirceSupport {
+
   import StatusCodes._
   import movieService._
 
-  val route = pathPrefix("movies") {
+  val route: Route = pathPrefix("movies") {
     concat(
       pathEndOrSingleSlash {
         get {
-          complete(getMovies().map(_.asJson))
+          complete(getMovies.map(_.asJson))
         }
       },
       path(LongNumber) { id =>

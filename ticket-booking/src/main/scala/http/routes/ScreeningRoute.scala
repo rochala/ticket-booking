@@ -1,35 +1,32 @@
 package http.routes
 
-import core.screenings.ScreeningService
-import scala.concurrent.ExecutionContext
+import java.sql.{Time, Timestamp}
+
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
-
-import io.circe.generic.auto._
-import io.circe.syntax._
+import akka.http.scaladsl.server.Route
+import core.screenings.ScreeningService
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import io.circe.Encoder
-import java.sql.Timestamp
-import io.circe.Decoder
-import io.circe.Json
-import io.circe.HCursor
-import java.sql.Date
-import akka.http.scaladsl.model.DateTime
-import java.sql.Time
+import io.circe.generic.auto._
+import io.circe.syntax._
+
+import scala.concurrent.ExecutionContext
 
 class ScreeningRoute(screeningService: ScreeningService)(implicit
-    executionContext: ExecutionContext,
-    timestampEncoder: Encoder[Timestamp],
-    timeEncoder: Encoder[Time]
+                                                         executionContext: ExecutionContext,
+                                                         timestampEncoder: Encoder[Timestamp],
+                                                         timeEncoder: Encoder[Time]
 ) extends FailFastCirceSupport {
+
   import StatusCodes._
   import screeningService._
 
-  val route = pathPrefix("screenings") {
+  val route: Route = pathPrefix("screenings") {
     concat(
       pathEndOrSingleSlash {
         get {
-          complete(allScreenings().map(_.asJson))
+          complete(allScreenings.map(_.asJson))
         }
       },
       path(LongNumber) { id =>
