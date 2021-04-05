@@ -28,5 +28,5 @@ class H2ReservationStorage(val databaseConnector: DatabaseConnector)(implicit ex
   def getReservation(id: Long): Future[Option[Reservation]] = db.run(reservations.filter(_.id === id).result.headOption)
 
   def saveReservation(reservation: Reservation): Future[Reservation] =
-    db.run(reservations.insertOrUpdate(reservation).map(_ => reservation))
+    db.run(reservations returning reservations.map(r => r) += reservation)
 }

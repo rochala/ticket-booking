@@ -15,9 +15,13 @@ import io.circe.Json
 import io.circe.HCursor
 import java.sql.Date
 import akka.http.scaladsl.model.DateTime
+import java.sql.Time
 
-class ScreeningRoute(screeningService: ScreeningService)(implicit executionContext: ExecutionContext, encoder: Encoder[Timestamp])
-    extends FailFastCirceSupport {
+class ScreeningRoute(screeningService: ScreeningService)(implicit
+    executionContext: ExecutionContext,
+    timestampEncoder: Encoder[Timestamp],
+    timeEncoder: Encoder[Time]
+) extends FailFastCirceSupport {
   import StatusCodes._
   import screeningService._
 

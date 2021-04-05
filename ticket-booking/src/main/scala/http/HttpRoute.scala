@@ -14,6 +14,7 @@ import io.circe.Decoder
 import io.circe.Json
 import io.circe.HCursor
 import java.sql.Timestamp
+import java.sql.Time
 
 class HttpRoute(
   hallService: HallDataService,
@@ -25,9 +26,16 @@ class HttpRoute(
 
   implicit val TimestampFormat: Encoder[Timestamp] with Decoder[Timestamp] = new Encoder[Timestamp]
     with Decoder[Timestamp] {
-    override def apply(a: Timestamp): Json = Encoder.encodeLong.apply(a.getTime)
+    override def apply(a: Timestamp): Json = Encoder.encodeString.apply(a.toString)
 
-    override def apply(c: HCursor): Decoder.Result[Timestamp] = Decoder.decodeLong.map(s => new Timestamp(s)).apply(c)
+    override def apply(c: HCursor): Decoder.Result[Timestamp] = Decoder.decodeString.map(s => Timestamp.valueOf(s)).apply(c)
+  }
+
+  implicit val TimeFormat: Encoder[Time] with Decoder[Time] = new Encoder[Time]
+    with Decoder[Time] {
+    override def apply(a: Time): Json = Encoder.encodeString.apply(a.toString)
+
+    override def apply(c: HCursor): Decoder.Result[Time] = Decoder.decodeString.map(s => Time.valueOf(s)).apply(c)
   }
 
 

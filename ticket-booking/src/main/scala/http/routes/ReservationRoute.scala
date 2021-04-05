@@ -21,9 +21,19 @@ class ReservationRoute(reservationService: ReservationService)(implicit
   val route = pathPrefix("reservations") {
     concat(
       pathEndOrSingleSlash {
-        get {
-          complete(getReservations().map(_.asJson))
-        }
+        concat(
+          get {
+            complete(getReservations().map(_.asJson))
+          },
+          post {
+            entity(as[ReservationForm]) { reservationForm =>
+              complete(makeReservation(reservationForm).map {
+                case Some(reservation) => OK         -> reservation.asJson
+                case None              => BadRequest -> None.asJson
+              })
+            }
+          }
+        )
       },
       path(LongNumber) { id =>
         pathEndOrSingleSlash {
