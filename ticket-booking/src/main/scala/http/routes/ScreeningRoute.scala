@@ -48,6 +48,13 @@ class ScreeningRoute(screeningService: ScreeningService)(implicit
           }
         }
       },
+      path(Segment / Segment) { (start, end) =>
+        pathEndOrSingleSlash {
+          get {
+            complete(screeningSchedule(Timestamp.valueOf(start), Timestamp.valueOf(end)).map(_.asJson))
+          }
+        }
+      },
       pathPrefix("details") {
         path(LongNumber) { id =>
           pathEndOrSingleSlash {
