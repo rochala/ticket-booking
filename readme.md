@@ -30,29 +30,29 @@ Besides akka-http I used following libraries, technologies:
 
 ### Steps
 
-1. **Clone this repository**
+1. **Clone this repository**  
 ```git clone https://github.com/rochala/ticket-booking.git```
-1. **Change directory to ticket-booking**
+1. **Change directory to ticket-booking**   
 ```cd ticket-booking```
-1. **Checkout to development branch**
+1. **Checkout to development branch**  
 ```git checkout development```
-1. **Database configuration**
+1. **Database configuration**  
 You can either use external database hosted on my server ( configuration is provided in email ) and skip next sections or
 host it locally on your machine.
 **Initializing postgreSQL on local machine**
-    2. Create new user:
-```createuser $name -P --interactive```
-    2. Create new database:
-```create database $databasename```
-    2. Connect to new database:
-```\connect $newdatabase```
-    2. Run initializatin script:
-```\i init.sql```
-    2. Grant privileges to created user:
-```
-Grant usage, select, on all sequences in schema public to $user;
-Grant all on all tables in schema public to $user;
-```
+    1. Create new user:  
+    ```createuser $name -P --interactive```
+    1. Create new database:  
+    ```create database $databasename```
+    1. Connect to new database:  
+    ```\connect $newdatabase```
+    1. Run initializatin script:  
+    ```\i init.sql```
+    1. Grant privileges to created user:  
+    ```
+    Grant usage, select, on all sequences in schema public to $user;
+    Grant all on all tables in schema public to $user;
+    ```
 
 1. **Configure database connection in src/main/resources/application.conf file**
 ```nvim src/main/resources/application.conf```
