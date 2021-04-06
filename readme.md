@@ -1,7 +1,5 @@
 # Ticket booking app
 
----
-
 Ticket booking system build with akka-http.
 
 1. [About](#about)
@@ -9,7 +7,6 @@ Ticket booking system build with akka-http.
 1. [API](#api)
 1. [Dependencies](#dependencies)
 
----
 ## About
 This system was build with akka-http high level API. I made following assumptions in this project:
 * each row in screening room has same number of seats
@@ -59,7 +56,6 @@ Grant all on all tables in schema public to $user;
 1. **Start project**
 ```sbt run```
 
----
 
 ## API
 API tests are provided in test_api.sh shell script.

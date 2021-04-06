@@ -49,7 +49,7 @@ object Boot extends App {
     StdIn.readLine() // let it run until user presses return
     bindingFuture
       .flatMap(_.unbind()) // trigger unbinding from the port
-      .onComplete(_ ⇒ actorSystem.terminate()) // and shutdown when done
+      .onComplete(_ => actorSystem.terminate()) // and shutdown when done
   }
 
   startApplication()
