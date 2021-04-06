@@ -1,9 +1,8 @@
-
 CREATE TABLE MOVIES(
     ID SERIAL PRIMARY KEY,
     imdbID VARCHAR(15),
     title VARCHAR(50) NOT NULL,
-    duration INT NOT NULL
+    duration TIME NOT NULL
 );
 
 
@@ -19,7 +18,7 @@ CREATE TABLE SCREENINGS(
     ID SERIAL PRIMARY KEY,
     hallID INT NOT NULL REFERENCES HALLS(ID),
     movieID INT NOT NULL REFERENCES MOVIES(ID),
-    screening_time INT NOT NULL
+    screening_time TIMESTAMP NOT NULL
 );
 
 CREATE TABLE RESERVATIONS(
@@ -31,7 +30,7 @@ CREATE TABLE RESERVATIONS(
 );
 
 CREATE TABLE SEATS(
-    ID SERIAL PRIMARY KEY,
+    ID SERIAL PRIMAR KEY,
     reservationID INT NOT NULL REFERENCES RESERVATIONS(ID),
     row_num INT NOT NULL,
     seat_index INT NOT NULL,
@@ -39,15 +38,15 @@ CREATE TABLE SEATS(
 
 INSERT INTO MOVIES (imdbID, title, duration)
 VALUES
-      ('tt1375666', 'Inception', 8880000),
-      ('tt0076759', 'Star Wars: Episode IV - A New Hope', 7260000),
-      ('tt0083658', 'Blade Runner', 7020000),
-      ('tt1856101', 'Blade Runner 2049', 9840000),
-      ('tt0110912', 'Pulp Fiction', 9240000),
-      ('tt0120737', 'The Lord of the Rings: The Fellowship of the Ring',10680000),
-      ('tt0060196', 'The Good, the Bad and the Ugly', 10680000),
-      ('tt6751668', 'Parasite', 7920000),
-      ('tt3748528', 'Rouge One: A Star Wars Story', 7980000);
+      ('tt1375666', 'Inception', '2:28'),
+      ('tt0076759', 'Star Wars: Episode IV - A New Hope', '2:01'),
+      ('tt0083658', 'Blade Runner', '1:57'),
+      ('tt1856101', 'Blade Runner 2049', '2:44'),
+      ('tt0110912', 'Pulp Fiction', '2:34'),
+      ('tt0120737', 'The Lord of the Rings: The Fellowship of the Ring','2:58'),
+      ('tt0060196', 'The Good, the Bad and the Ugly', '2:58'),
+      ('tt6751668', 'Parasite', '2:12'),
+      ('tt3748528', 'Rouge One: A Star Wars Story', '2:13');
 
 INSERT INTO HALLS (name, row_num, column_num)
 VALUES
@@ -84,26 +83,25 @@ VALUES
 
 INSERT INTO RESERVATIONS (screeningid, name, surname, status)
 VALUES
-    (93, 'TestName1', 'TestName1', 'PAID'),
-    (93, 'TestName2', 'TestName2', 'PAID'),
-    (93, 'TestName3', 'TestName3', 'PAID'),
-    (93, 'TestName4', 'TestName4', 'PAID');
+    (1, 'TestName1', 'TestName1', 'PAID'),
+    (1, 'TestName2', 'TestName2', 'PAID'),
+    (1, 'TestName3', 'TestName3', 'PAID'),
+    (1, 'TestName4', 'TestName4', 'PAID');
 
 INSERT INTO SEATS (reservationid, row_num, seat_index, price)
 VALUES
-    (9, 0, 0, 18.0),
-    (9, 0, 1, 18.0),
-    (9, 0, 2, 18.0),
-    (9, 0, 3, 18.0),
-    (10, 1, 3, 25.0),
-    (10, 1, 4, 15.0),
-    (10, 1, 5, 25.0),
-    (11, 7, 8, 25.0),
-    (11, 7, 9, 25.0),
-    (11, 7, 10, 25.0),
-    (12, 4, 7, 25.0),
-    (12, 4, 8, 25.0),
-    (12, 4, 9, 25.0),
-    (12, 4, 10, 25.0);
-
+    (1, 0, 0, 18.0),
+    (1, 0, 1, 18.0),
+    (1, 0, 2, 18.0),
+    (1, 0, 3, 18.0),
+    (2, 1, 3, 25.0),
+    (2, 1, 4, 15.0),
+    (2, 1, 5, 25.0),
+    (3, 7, 8, 25.0),
+    (3, 7, 9, 25.0),
+    (3, 7, 10, 25.0),
+    (4, 4, 7, 25.0),
+    (4, 4, 8, 25.0),
+    (4, 4, 9, 25.0),
+    (4, 4, 10, 25.0);
 

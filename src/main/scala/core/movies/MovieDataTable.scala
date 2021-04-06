@@ -11,6 +11,7 @@ private[core] trait MovieDataTable {
   protected val databaseConnector: DatabaseConnector
 
   import databaseConnector.profile.api._
+
   protected val movies = TableQuery[Movies]
 
   class Movies(tag: Tag) extends Table[Movie](tag, "movies") {
@@ -26,4 +27,5 @@ private[core] trait MovieDataTable {
       SqlType("TIME NOT NULL")
     )
   }
+
 }

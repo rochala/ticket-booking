@@ -8,6 +8,7 @@ private[core] trait HallDataTable {
   protected val databaseConnector: DatabaseConnector
 
   import databaseConnector.profile.api._
+
   protected val halls = TableQuery[Halls]
 
   class Halls(tag: Tag) extends Table[Hall](tag, "halls") {
@@ -21,4 +22,5 @@ private[core] trait HallDataTable {
 
     def columns = column[Int]("column_num")
   }
+
 }

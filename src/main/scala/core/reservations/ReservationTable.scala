@@ -12,6 +12,7 @@ private[core] trait ReservationTable extends ScreeningTable {
   protected val databaseConnector: DatabaseConnector
 
   import databaseConnector.profile.api._
+
   protected val reservations = TableQuery[Reservations]
 
   class Reservations(tag: Tag) extends Table[Reservation](tag, "reservations") {
@@ -35,4 +36,5 @@ private[core] trait ReservationTable extends ScreeningTable {
 
     def screeningID = column[Long]("screeningid")
   }
+
 }

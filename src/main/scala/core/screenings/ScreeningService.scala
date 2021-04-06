@@ -63,4 +63,5 @@ class ScreeningService(screeningStorage: ScreeningStorage, seatStorage: SeatStor
                                hall: Hall,
                                availableSeats: Array[Array[Boolean]]
                              )
+
 }

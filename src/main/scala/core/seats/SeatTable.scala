@@ -10,6 +10,7 @@ private[core] trait SeatTable extends ReservationTable {
   protected val databaseConnector: DatabaseConnector
 
   import databaseConnector.profile.api._
+
   protected val seats = TableQuery[Seats]
 
   class Seats(tag: Tag) extends Table[Seat](tag, "seats") {
@@ -28,5 +29,6 @@ private[core] trait SeatTable extends ReservationTable {
 
     def reservation = foreignKey("reservation_fk", reservationID, TableQuery[Reservations])(_.id)
   }
+
 }
 

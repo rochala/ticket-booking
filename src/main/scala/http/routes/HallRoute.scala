@@ -11,7 +11,7 @@ import io.circe.syntax._
 import scala.concurrent.ExecutionContext
 
 class HallRoute(hallService: HallDataService)(implicit executionContext: ExecutionContext)
-    extends FailFastCirceSupport {
+  extends FailFastCirceSupport {
 
   import StatusCodes._
   import hallService._

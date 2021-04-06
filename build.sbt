@@ -19,6 +19,7 @@ libraryDependencies ++= Seq(
   "com.github.tminglei" %% "slick-pg_circe-json" % "0.19.5",
 
 
+  "org.scalatest"     %% "scalatest"                % "3.2.5",
 
   /* "mysql" % "mysql-connector-java" % "8.0.23", */
 
@@ -30,7 +31,7 @@ libraryDependencies ++= Seq(
 
   "com.typesafe.akka" %% "akka-http-testkit"        % akkaHttpVersion % Test,
   "com.typesafe.akka" %% "akka-actor-testkit-typed" % akkaVersion     % Test,
-  "org.scalatest"     %% "scalatest"                % "3.1.4"         % Test,
+  "org.scalatest"     %% "scalatest"                % "3.2.5"         % Test,
 
   "io.circe" %% "circe-core" % circeVersion,
   "io.circe" %% "circe-generic" % circeVersion,
