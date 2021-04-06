@@ -12,7 +12,7 @@ sealed trait HallDataStorage {
 
 }
 
-class H2HallDataStorage(val databaseConnector: DatabaseConnector)(implicit executionContext: ExecutionContext)
+class DBHallDataStorage(val databaseConnector: DatabaseConnector)(implicit executionContext: ExecutionContext)
   extends HallDataTable
     with HallDataStorage {
 

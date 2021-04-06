@@ -57,7 +57,7 @@ VALUES
 
 INSERT INTO SCREENINGS (hallID, movieID, screening_time)
 VALUES
-    (1, 1,to_timestamp(1616695200)),
+    (1, 1,to_timestamp(1619701200)),
     (1, 1,to_timestamp(1616706000)),
     (2, 2,to_timestamp(1616695200)),
     (2, 2,to_timestamp(1616706000)),

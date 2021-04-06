@@ -12,9 +12,11 @@ sealed trait SeatStorage {
 
   def takenSeats(screeningID: Long): Future[Seq[Seat]]
 
+  def saveSeats(newSeats: List[Seat]): Future[Seq[Seat]]
+
 }
 
-class H2SeatStorage(val databaseConnector: DatabaseConnector)(implicit executionContext: ExecutionContext)
+class DBSeatStorage(val databaseConnector: DatabaseConnector)(implicit executionContext: ExecutionContext)
   extends SeatTable
     with SeatStorage {
 
@@ -32,4 +34,6 @@ class H2SeatStorage(val databaseConnector: DatabaseConnector)(implicit execution
 
   def takenSeats(screeningID: Long): Future[Seq[Seat]] =
     db.run(joinQuery.filter(_._1 === screeningID).map(_._2).distinct.result)
+
+  def saveSeats(newSeats: List[Seat]): Future[Seq[Seat]] = db.run(seats returning seats ++= newSeats)
 }

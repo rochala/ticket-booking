@@ -17,7 +17,7 @@ sealed trait ScreeningStorage {
   def getScreeningDetails(id: Long): Future[Option[(Screening, Movie, Hall)]]
 }
 
-class H2ScreeningStorage(val databaseConnector: DatabaseConnector)(implicit executionContext: ExecutionContext)
+class DBScreeningStorage(val databaseConnector: DatabaseConnector)(implicit executionContext: ExecutionContext)
   extends ScreeningTable
     with ScreeningStorage {
 

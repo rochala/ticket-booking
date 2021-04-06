@@ -14,7 +14,7 @@ sealed trait MovieDataStorage {
 
 }
 
-class H2MovieDataStorage(val databaseConnector: DatabaseConnector)(implicit executionContext: ExecutionContext)
+class DBMovieDataStorage(val databaseConnector: DatabaseConnector)(implicit executionContext: ExecutionContext)
   extends MovieDataTable
     with MovieDataStorage {
 
