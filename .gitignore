@@ -3,7 +3,7 @@
 
 ### Bloop ###
 .bloop/
-
+project/
 ### Java ###
 # Compiled class file
 *.class
