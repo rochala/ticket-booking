@@ -45,7 +45,7 @@ object Boot extends App {
     val bindingFuture = Http().newServerAt(Config.httpHost, Config.httpPort).bind(httpRoute.route)
 
     printf("Server online at http://%s:%d/\n", Config.httpHost, Config.httpPort)
-    println("Press RETURN to stop...")
+    println("Press Enter to stop...")
     StdIn.readLine() // let it run until user presses return
     bindingFuture
       .flatMap(_.unbind()) // trigger unbinding from the port
