@@ -53,6 +53,8 @@ host it locally on your machine.
 
 1. **Configure database connection in src/main/resources/application.conf file**
 ```nvim src/main/resources/application.conf```
+1. **Run tests**
+```sbt test```
 1. **Start project**
 ```sbt run```
 
