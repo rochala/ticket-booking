@@ -31,8 +31,9 @@ class ReservationRoute(reservationService: ReservationService)(implicit
           post {
             entity(as[ReservationForm]) { reservationForm =>
               complete(makeReservation(reservationForm).map {
-                case Some(reservation) => OK -> reservation.asJson
-                case None => BadRequest -> None.asJson
+                case (Some(reservation), None) => OK -> reservation.asJson
+                case (None, Some(error)) => BadRequest -> error.asJson
+                case _ => BadRequest -> None.asJson
               })
             }
           }

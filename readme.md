@@ -47,7 +47,7 @@ host it locally on your machine.
     ```\i init.sql```
     1. Grant privileges to created user:
     ```
-    Grant usage, select, on all sequences in schema public to $user;
+    Grant usage, select on all sequences in schema public to $user;
     Grant all on all tables in schema public to $user;
     ```
 
@@ -61,6 +61,26 @@ host it locally on your machine.
 
 ## API
 API tests are provided in test_api.sh shell script.
+
+### Screening data
+```
+http://localhost:8080/api/movies
+http://localhost:8080/api/movie/${ID}
+
+http://localhost:8080/api/halls
+http://localhost:8080/api/hall/${ID}
+
+http://localhost:8080/api/screenings
+http://localhost:8080/api/screening/${ID}
+http://localhost:8080/api/screening/${TIMESTAMP}/${TIMESTAMP}
+http://localhost:8080/api/screening/${STRING DATETIME}/${STRING DATETIME}
+http://localhost:8080/api/screening/details/${ID}
+```
+
+### Reservation POST
+```
+http://localhost:8080/api/reservation
+```
 
 
 ## Dependencies

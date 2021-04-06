@@ -13,7 +13,6 @@ import scala.concurrent.duration.Duration
 import core.screenings.ScreeningService
 import core.Hall
 
-
 class ReservationService(
     reservationStorage: ReservationStorage,
     seatStorage: SeatStorage,
@@ -23,24 +22,30 @@ class ReservationService(
 
   def getReservation(id: Long): Future[Option[Reservation]] = reservationStorage.getReservation(id)
 
-  def makeReservation(reservationForm: ReservationForm): Future[Option[ReservationSummary]] = {
-
+  def makeReservation(reservationForm: ReservationForm): Future[(Option[ReservationSummary], Option[String])] = {
     val screeningData = Await.result(screeningStorage.getScreeningDetails(reservationForm.screeningID), Duration.Inf)
-    if (screeningData.isEmpty) return Future(None)
+    if (screeningData.isEmpty) return Future((None, Some("Cannot find requested screening")))
 
     val reservationTime = new Timestamp(Calendar.getInstance().getTimeInMillis)
-    if (
-      reservationForm.seats.isEmpty ||
-      !checkReservationTime(reservationTime, screeningData.get._1.screeningTime) ||
-      !checkFullName(reservationForm.name, reservationForm.surname)
-    ) return Future(None)
+    if (reservationForm.seats.isEmpty)
+      return Future((None, Some("Reservation must have at least 1 seat")))
 
+    if (!checkReservationTime(reservationTime, screeningData.get._1.screeningTime))
+      return Future((None, Some("There are less than 15 minutes to screening")))
+
+    if (!checkFullName(reservationForm.name, reservationForm.surname))
+      return Future((None, Some("Illegal name or surname")))
+
+    val paymentTime = new Timestamp(
+      if ((reservationTime.getTime + 3 * 24 * 60 * 60 * 1000) < screeningData.get._1.screeningTime.getTime)
+        reservationTime.getTime + 5 * 24 * 60 * 60 * 1000
+      else screeningData.get._1.screeningTime.getTime
+    )
     val seatsWithoutID = reservationForm.seats.map(s => Seat(None, 0, s.row, s.index, ticketTypeMapper(s.ticketType)))
-
     val takenSeats = Await.result(seatStorage.takenSeats(reservationForm.screeningID), Duration.Inf)
-    println(takenSeats)
 
-    if (!checkRowsValues(seatsWithoutID, takenSeats, screeningData.get._3)) return Future(None)
+    if (!checkRowsValues(seatsWithoutID, takenSeats, screeningData.get._3))
+      return Future((None, Some("There is either single seat space in row or seats indices are out of bounds")))
 
     val reservation = Await.result(
       reservationStorage.saveReservation(
@@ -62,15 +67,7 @@ class ReservationService(
 
     val totalPrice = seatsWithoutID.foldLeft(0.0)(_ + _.price)
 
-    // println(reservationForm)
-    // println(checkRowsValues(reservationForm.seats.map(s => Seat(None, 0, s.row, s.index, 1.0))))
-    // println(checkFullName(reservationForm.name, reservationForm.surname))
-    // println(checkReservationTime(93, Timestamp.valueOf("2021-03-25 19:00:00.0")))
-    // println(checkReservationTime(93, Timestamp.valueOf("2021-03-25 18:00:00.0")))
-    // println(checkReservationTime(93, Timestamp.valueOf("2021-03-25 18:45:00.0")))
-    // println(checkReservationTime(93, Timestamp.valueOf("2021-03-25 18:44:59.0")))
-    // println(checkReservationTime(93, Timestamp.valueOf("2021-03-25 19:01:00.0")))
-    Future(Some(ReservationSummary(reservation.id.get, totalPrice, reservationTime)))
+    Future((Some(ReservationSummary(reservation.id.get, totalPrice, paymentTime)), None))
   }
 
   def ticketTypeMapper(ticketType: String): Double =
@@ -82,7 +79,7 @@ class ReservationService(
     }
 
   def checkReservationTime(reservationTime: Timestamp, screeningTime: Timestamp): Boolean = {
-     (reservationTime.getTime + (15 * 60 * 10)) < screeningTime.getTime
+    (reservationTime.getTime + (15 * 60 * 10)) < screeningTime.getTime
   }
 
   def checkFullName(name: String, surname: String): Boolean = {

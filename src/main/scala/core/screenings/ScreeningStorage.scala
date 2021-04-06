@@ -29,7 +29,7 @@ class DBScreeningStorage(val databaseConnector: DatabaseConnector)(implicit exec
   } yield (m, s.id, s.screeningTime)
 
   val fullJoinQuery = for {
-    ((s, m), h) <- screenings join movies join halls
+    ((s, m), h) <- screenings join movies on (_.movieID === _.id) join halls on (_._1.hallID === _.id)
   } yield (s, m, h)
 
   def getScreenings: Future[Seq[Screening]] = db.run(screenings.result)

@@ -30,7 +30,7 @@ CREATE TABLE RESERVATIONS(
 );
 
 CREATE TABLE SEATS(
-    ID SERIAL PRIMAR KEY,
+    ID SERIAL PRIMARY KEY,
     reservationID INT NOT NULL REFERENCES RESERVATIONS(ID),
     row_num INT NOT NULL,
     seat_index INT NOT NULL,
@@ -52,33 +52,33 @@ INSERT INTO HALLS (name, row_num, column_num)
 VALUES
     ('Main hall', 18, 30),
     ('Studio hall', 12, 20),
-    ('Small hall', 10, 15);
+    ('Small hall', 5, 7);
 
 INSERT INTO SCREENINGS (hallID, movieID, screening_time)
 VALUES
     (1, 1,to_timestamp(1619701200)),
-    (1, 1,to_timestamp(1616706000)),
-    (2, 2,to_timestamp(1616695200)),
-    (2, 2,to_timestamp(1616706000)),
-    (3, 3,to_timestamp(1616695200)),
-    (3, 3,to_timestamp(1616706000)),
-    (1, 4,to_timestamp(1616785200)),
-    (1, 4,to_timestamp(1616871600)),
-    (2, 5,to_timestamp(1616774400)),
-    (2, 5,to_timestamp(1616787000)),
-    (3, 6,to_timestamp(1616774400)),
-    (3, 6,to_timestamp(1616787000)),
-    (2, 6,to_timestamp(1616868000)),
-    (3, 6,to_timestamp(1616868000)),
-    (1, 7,to_timestamp(1616936400)),
-    (1, 8,to_timestamp(1616949000)),
-    (1, 9,to_timestamp(1616961600)),
-    (2, 8,to_timestamp(1616936400)),
-    (2, 9,to_timestamp(1616949000)),
-    (2, 7,to_timestamp(1616961600)),
-    (3, 9,to_timestamp(1616936400)),
-    (3, 7,to_timestamp(1616949000)),
-    (3, 8,to_timestamp(1616961600)),
+    (1, 1,to_timestamp(1619377200)),
+    (2, 2,to_timestamp(1619366400)),
+    (2, 2,to_timestamp(1619377200)),
+    (3, 3,to_timestamp(1619366400)),
+    (3, 3,to_timestamp(1619377200)),
+    (1, 4,to_timestamp(1619366400)),
+    (1, 4,to_timestamp(1619542800)),
+    (2, 5,to_timestamp(1619532000)),
+    (2, 5,to_timestamp(1619544600)),
+    (3, 6,to_timestamp(1619447400)),
+    (3, 6,to_timestamp(1619458200)),
+    (2, 6,to_timestamp(1619542800)),
+    (3, 6,to_timestamp(1619542800)),
+    (1, 7,to_timestamp(1619607600)),
+    (1, 8,to_timestamp(1619620200)),
+    (1, 9,to_timestamp(1619632800)),
+    (2, 8,to_timestamp(1619607600)),
+    (2, 9,to_timestamp(1619620200)),
+    (2, 7,to_timestamp(1619632800)),
+    (3, 9,to_timestamp(1619607600)),
+    (3, 7,to_timestamp(1619620200)),
+    (3, 8,to_timestamp(1619632800)),
     (3, 8,to_timestamp(1606961600));
 
 INSERT INTO RESERVATIONS (screeningid, name, surname, status)
