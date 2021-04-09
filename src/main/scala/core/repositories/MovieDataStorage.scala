@@ -1,6 +1,7 @@
-package core.movies
+package core.repositories
 
 import core.Movie
+import core.tables.MovieDataTable
 import utils.DatabaseConnector
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -15,7 +16,7 @@ sealed trait MovieDataStorage {
 }
 
 class DBMovieDataStorage(val databaseConnector: DatabaseConnector)(implicit executionContext: ExecutionContext)
-  extends MovieDataTable
+    extends MovieDataTable
     with MovieDataStorage {
 
   import databaseConnector._

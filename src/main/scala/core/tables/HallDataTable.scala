@@ -1,4 +1,4 @@
-package core.halls
+package core.tables
 
 import core.Hall
 import utils.DatabaseConnector

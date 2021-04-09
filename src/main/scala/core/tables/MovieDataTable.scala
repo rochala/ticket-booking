@@ -1,4 +1,4 @@
-package core.movies
+package core.tables
 
 import java.sql.Time
 
@@ -19,13 +19,11 @@ private[core] trait MovieDataTable {
 
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
 
-    def imdbID = column[String]("imdbid")
+    def imdbID = column[String]("imdb_id")
 
     def title = column[String]("title")
 
-    def duration = column[Time]("duration",
-      SqlType("TIME NOT NULL")
-    )
+    def duration = column[Time]("duration", SqlType("TIME NOT NULL"))
   }
 
 }

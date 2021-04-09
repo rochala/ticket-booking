@@ -1,13 +1,10 @@
-package core.screenings
+package core.tables
 
-import java.sql.Timestamp
+import java.time.LocalDateTime
 
 import core.Screening
-import core.halls.HallDataTable
-import core.movies.MovieDataTable
 import slick.lifted
 import slick.lifted.TableQuery
-import slick.sql.SqlProfile.ColumnOption.SqlType
 import utils.DatabaseConnector
 
 trait ScreeningTable extends MovieDataTable with HallDataTable {
@@ -24,18 +21,15 @@ trait ScreeningTable extends MovieDataTable with HallDataTable {
 
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
 
-    def screeningTime = column[Timestamp](
-      "screening_time",
-      SqlType("TIMESTAMP NOT NULL")
-    )
+    def screeningTime = column[LocalDateTime]("screening_time")
 
     def hall = foreignKey("hall_fk", hallID, lifted.TableQuery[Halls])(_.id)
 
-    def hallID = column[Long]("hallid")
+    def hallID = column[Long]("hall_id")
 
     def movie = foreignKey("movie_fk", movieID, lifted.TableQuery[Movies])(_.id)
 
-    def movieID = column[Long]("movieid")
+    def movieID = column[Long]("movie_id")
   }
 
 }

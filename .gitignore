@@ -8,6 +8,8 @@ project/
 # Compiled class file
 *.class
 
+.DS_Store
+
 .idea/
 # Log file
 *.log

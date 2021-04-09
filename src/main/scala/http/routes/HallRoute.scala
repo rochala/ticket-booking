@@ -3,7 +3,7 @@ package http.routes
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import core.halls.HallDataService
+import core.services.HallDataService
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import io.circe.generic.auto._
 import io.circe.syntax._
@@ -11,7 +11,7 @@ import io.circe.syntax._
 import scala.concurrent.ExecutionContext
 
 class HallRoute(hallService: HallDataService)(implicit executionContext: ExecutionContext)
-  extends FailFastCirceSupport {
+    extends FailFastCirceSupport {
 
   import StatusCodes._
   import hallService._

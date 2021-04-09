@@ -5,18 +5,19 @@ import java.sql.{Time, Timestamp}
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import core.screenings.ScreeningService
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import io.circe.Encoder
 import io.circe.generic.auto._
 import io.circe.syntax._
 
 import scala.concurrent.ExecutionContext
+import java.time.LocalDateTime
+
+import core.services.ScreeningService
 
 class ScreeningRoute(screeningService: ScreeningService)(implicit
-                                                         executionContext: ExecutionContext,
-                                                         timestampEncoder: Encoder[Timestamp],
-                                                         timeEncoder: Encoder[Time]
+    executionContext: ExecutionContext,
+    timeEncoder: Encoder[Time]
 ) extends FailFastCirceSupport {
 
   import StatusCodes._
@@ -41,13 +42,6 @@ class ScreeningRoute(screeningService: ScreeningService)(implicit
           }
         }
       },
-      path(LongNumber / LongNumber) { (start, end) =>
-        pathEndOrSingleSlash {
-          get {
-            complete(screeningSchedule(new Timestamp(start), new Timestamp(end)).map(_.asJson))
-          }
-        }
-      },
       pathPrefix("details") {
         path(LongNumber) { id =>
           pathEndOrSingleSlash {
@@ -65,7 +59,7 @@ class ScreeningRoute(screeningService: ScreeningService)(implicit
       path(Segment / Segment) { (start, end) =>
         pathEndOrSingleSlash {
           get {
-            complete(screeningSchedule(Timestamp.valueOf(start), Timestamp.valueOf(end)).map(_.asJson))
+            complete(screeningSchedule(LocalDateTime.parse(start), LocalDateTime.parse(end)).map(_.asJson))
           }
         }
       }

@@ -1,6 +1,7 @@
-package core.movies
+package core.services
 
 import core.Movie
+import core.repositories.MovieDataStorage
 
 import scala.concurrent.{ExecutionContext, Future}
 

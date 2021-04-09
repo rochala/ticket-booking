@@ -1,13 +1,13 @@
 CREATE TABLE MOVIES(
-    ID SERIAL PRIMARY KEY,
-    imdbID VARCHAR(15),
+    id SERIAL PRIMARY KEY,
+    imdb_id VARCHAR(15),
     title VARCHAR(50) NOT NULL,
     duration TIME NOT NULL
 );
 
 
 CREATE TABLE HALLS(
-    ID SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     row_num INT NOT NULL,
     column_num INT NOT NULL
@@ -15,28 +15,29 @@ CREATE TABLE HALLS(
 
 
 CREATE TABLE SCREENINGS(
-    ID SERIAL PRIMARY KEY,
-    hallID INT NOT NULL REFERENCES HALLS(ID),
-    movieID INT NOT NULL REFERENCES MOVIES(ID),
+    id SERIAL PRIMARY KEY,
+    hall_id INT NOT NULL REFERENCES HALLS(id),
+    movie_id INT NOT NULL REFERENCES MOVIES(id),
     screening_time TIMESTAMP NOT NULL
 );
 
 CREATE TABLE RESERVATIONS(
-    ID SERIAL PRIMARY KEY,
-    screeningID INT NOT NULL REFERENCES SCREENINGS(ID),
-    name TEXT NOT NULL, surname TEXT NOT NULL,
+    id SERIAL PRIMARY KEY,
+    screening_id INT NOT NULL REFERENCES SCREENINGS(id),
+    name TEXT NOT NULL,
+    surname TEXT NOT NULL,
     status VARCHAR(10) NOT NULL,
     reservation_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE SEATS(
-    ID SERIAL PRIMARY KEY,
-    reservationID INT NOT NULL REFERENCES RESERVATIONS(ID),
+    id SERIAL PRIMARY KEY,
+    reservation_id INT NOT NULL REFERENCES RESERVATIONS(id),
     row_num INT NOT NULL,
     seat_index INT NOT NULL,
-    price FLOAT NOT NULL);
+    price NUMERIC(6,2) NOT NULL);
 
-INSERT INTO MOVIES (imdbID, title, duration)
+INSERT INTO MOVIES (imdb_id, title, duration)
 VALUES
       ('tt1375666', 'Inception', '2:28'),
       ('tt0076759', 'Star Wars: Episode IV - A New Hope', '2:01'),
@@ -54,7 +55,7 @@ VALUES
     ('Studio hall', 12, 20),
     ('Small hall', 5, 7);
 
-INSERT INTO SCREENINGS (hallID, movieID, screening_time)
+INSERT INTO SCREENINGS (hall_id, movie_id, screening_time)
 VALUES
     (1, 1,to_timestamp(1619701200)),
     (1, 1,to_timestamp(1619377200)),
@@ -81,21 +82,21 @@ VALUES
     (3, 8,to_timestamp(1619632800)),
     (3, 8,to_timestamp(1606961600));
 
-INSERT INTO RESERVATIONS (screeningid, name, surname, status)
+INSERT INTO RESERVATIONS (screening_id, name, surname, status)
 VALUES
-    (1, 'TestName1', 'TestName1', 'PAID'),
-    (1, 'TestName2', 'TestName2', 'PAID'),
-    (1, 'TestName3', 'TestName3', 'PAID'),
-    (1, 'TestName4', 'TestName4', 'PAID');
+    (1, 'TestName1', 'TestName1', 'Paid'),
+    (1, 'TestName2', 'TestName2', 'Paid'),
+    (1, 'TestName3', 'TestName3', 'Paid'),
+    (1, 'TestName4', 'TestName4', 'Paid');
 
-INSERT INTO SEATS (reservationid, row_num, seat_index, price)
+INSERT INTO SEATS (reservation_id, row_num, seat_index, price)
 VALUES
     (1, 0, 0, 18.0),
     (1, 0, 1, 18.0),
     (1, 0, 2, 18.0),
     (1, 0, 3, 18.0),
     (2, 1, 3, 25.0),
-    (2, 1, 4, 15.0),
+    (2, 1, 4, 12.5),
     (2, 1, 5, 25.0),
     (3, 7, 8, 25.0),
     (3, 7, 9, 25.0),

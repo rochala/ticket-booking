@@ -1,6 +1,7 @@
-package core.seats
+package core.services
 
 import core.Seat
+import core.repositories.SeatStorage
 
 import scala.concurrent.{ExecutionContext, Future}
 

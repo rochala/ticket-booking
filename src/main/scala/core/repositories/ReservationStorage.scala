@@ -1,6 +1,7 @@
-package core.reservations
+package core.repositories
 
 import core.Reservation
+import core.tables.ReservationTable
 import utils.DatabaseConnector
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -15,12 +16,11 @@ sealed trait ReservationStorage {
 }
 
 class DBReservationStorage(val databaseConnector: DatabaseConnector)(implicit executionContext: ExecutionContext)
-  extends ReservationStorage
+    extends ReservationStorage
     with ReservationTable {
 
   import databaseConnector._
   import databaseConnector.profile.api._
-
 
   def getReservations: Future[Seq[Reservation]] = db.run(reservations.result)
 

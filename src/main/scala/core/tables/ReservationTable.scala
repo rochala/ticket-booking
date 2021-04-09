@@ -1,10 +1,8 @@
-package core.reservations
+package core.tables
 
-import java.sql.Timestamp
+import java.time.LocalDateTime
 
-import _root_.core.Reservation
-import _root_.core.screenings.ScreeningTable
-import slick.sql.SqlProfile
+import core.{Reservation, Status}
 import utils.DatabaseConnector
 
 private[core] trait ReservationTable extends ScreeningTable {
@@ -14,6 +12,11 @@ private[core] trait ReservationTable extends ScreeningTable {
   import databaseConnector.profile.api._
 
   protected val reservations = TableQuery[Reservations]
+
+  implicit val statusColumnType = MappedColumnType.base[Status.Status, String](
+    enum => enum.toString,
+    string => Status.withName(string)
+  )
 
   class Reservations(tag: Tag) extends Table[Reservation](tag, "reservations") {
     override def * =
@@ -25,16 +28,15 @@ private[core] trait ReservationTable extends ScreeningTable {
 
     def surname = column[String]("surname")
 
-    def status = column[String]("status")
+    def status = column[Status.Status]("status")
 
-    def reservatonTime = column[Timestamp](
-      "reservation_time",
-      SqlProfile.ColumnOption.SqlType("TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    def reservatonTime = column[LocalDateTime](
+      "reservation_time"
     )
 
     def screening = foreignKey("screening_fk", screeningID, TableQuery[Screenings])(_.id)
 
-    def screeningID = column[Long]("screeningid")
+    def screeningID = column[Long]("screening_id")
   }
 
 }

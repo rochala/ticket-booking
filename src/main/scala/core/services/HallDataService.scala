@@ -1,6 +1,7 @@
-package core.halls
+package core.services
 
 import core.Hall
+import core.repositories.HallDataStorage
 
 import scala.concurrent.{ExecutionContext, Future}
 

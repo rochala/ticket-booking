@@ -5,7 +5,7 @@ import java.sql.Timestamp
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import core.seats.SeatService
+import core.services.SeatService
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import io.circe.Encoder
 import io.circe.generic.auto._
@@ -13,11 +13,7 @@ import io.circe.syntax._
 
 import scala.concurrent.ExecutionContext
 
-class SeatRoute(seatService: SeatService)(implicit
-                                          executionContext: ExecutionContext,
-                                          encoder: Encoder[Timestamp]
-) extends FailFastCirceSupport {
-
+class SeatRoute(seatService: SeatService)(implicit executionContext: ExecutionContext) extends FailFastCirceSupport {
   import StatusCodes._
   import seatService._
 

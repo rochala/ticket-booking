@@ -1,6 +1,8 @@
-package core.seats
+package core.repositories
 
-import core.Seat
+import core.{Seat, Reservation}
+
+import core.tables.SeatTable
 import utils.DatabaseConnector
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -14,14 +16,20 @@ sealed trait SeatStorage {
 
   def saveSeats(newSeats: List[Seat]): Future[Seq[Seat]]
 
+  def fullReservationSave(newReservation: Reservation, newSeats: List[Seat])
 }
 
 class DBSeatStorage(val databaseConnector: DatabaseConnector)(implicit executionContext: ExecutionContext)
-  extends SeatTable
+    extends SeatTable
     with SeatStorage {
 
   import databaseConnector._
   import databaseConnector.profile.api._
+
+  def insertTransaction(newReservation: Reservation, newSeats: List[Seat]) = (for {
+    reservation <- reservations returning reservations.map(r => r.id) += newReservation
+    seats       <- seats ++= newSeats.map(seat => Seat(None, reservation, seat.row, seat.index, seat.price))
+  } yield (reservation, seats)).transactionally
 
   val joinQuery = for {
     (seat, reservation) <-
@@ -36,4 +44,7 @@ class DBSeatStorage(val databaseConnector: DatabaseConnector)(implicit execution
     db.run(joinQuery.filter(_._1 === screeningID).map(_._2).distinct.result)
 
   def saveSeats(newSeats: List[Seat]): Future[Seq[Seat]] = db.run(seats returning seats ++= newSeats)
+
+  def fullReservationSave(newReservation: Reservation, newSeats: List[Seat]) =
+    db.run(insertTransaction(newReservation, newSeats))
 }
