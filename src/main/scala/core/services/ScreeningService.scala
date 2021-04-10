@@ -6,6 +6,7 @@ import core.repositories.{ScreeningStorage, SeatStorage}
 import core.{Hall, Movie, Screening}
 
 import scala.concurrent.{ExecutionContext, Future}
+import java.time.format.DateTimeFormatter
 
 class ScreeningService(screeningStorage: ScreeningStorage, seatStorage: SeatStorage)(implicit
     executionContext: ExecutionContext
@@ -14,17 +15,28 @@ class ScreeningService(screeningStorage: ScreeningStorage, seatStorage: SeatStor
 
   def getScreening(id: Long): Future[Option[Screening]] = screeningStorage.getScreening(id)
 
-  def screeningSchedule(startDate: LocalDateTime, endDate: LocalDateTime): Future[Seq[MovieSchedule]] =
-    screeningStorage
-      .getMoviesScreenings(startDate, endDate)
-      .map {
-        _.groupBy(_._1)
-          .map { case (x, y) =>
-            MovieSchedule(x, y.map(e => ScreeningHeader(e._2, e._3)))
-          }
-          .toSeq
-          .sortBy(_.movie.title)
-      }
+  def screeningSchedule(startDate: String, endDate: String): Future[Option[Seq[MovieSchedule]]] = {
+    try {
+      val parsedStartDate = LocalDateTime.parse(startDate)
+      val parsedEndDate   = LocalDateTime.parse(endDate)
+
+      screeningStorage
+        .getMoviesScreenings(parsedStartDate, parsedEndDate)
+        .map { screenings =>
+          Some(
+            screenings
+              .groupBy(_._1)
+              .map { case (x, y) =>
+                MovieSchedule(x, y.map(e => ScreeningHeader(e._2, e._3)))
+              }
+              .toSeq
+              .sortBy(_.movie.title)
+          )
+        }
+    } catch {
+      case _: java.time.format.DateTimeParseException => Future(None)
+    }
+  }
 
   def screeningDetails(id: Long): Future[Option[ScreeningDetails]] = {
     val data = for {

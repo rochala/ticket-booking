@@ -1,3 +1,5 @@
+\c cinema cinemaadmin;
+
 CREATE TABLE MOVIES(
     id SERIAL PRIMARY KEY,
     imdb_id VARCHAR(15),
@@ -26,16 +28,17 @@ CREATE TABLE RESERVATIONS(
     screening_id INT NOT NULL REFERENCES SCREENINGS(id),
     name TEXT NOT NULL,
     surname TEXT NOT NULL,
-    status VARCHAR(10) NOT NULL,
-    reservation_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    status VARCHAR(10) NOT NULL, reservation_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE SEATS(
     id SERIAL PRIMARY KEY,
-    reservation_id INT NOT NULL REFERENCES RESERVATIONS(id),
+    reservation_id INT NOT NULL,
     row_num INT NOT NULL,
     seat_index INT NOT NULL,
     price NUMERIC(6,2) NOT NULL);
+
+ALTER TABLE SEATS ADD CONSTRAINT reservation_fk FOREIGN KEY (reservation_id) REFERENCES RESERVATIONS(id) ON DELETE CASCADE;
 
 INSERT INTO MOVIES (imdb_id, title, duration)
 VALUES

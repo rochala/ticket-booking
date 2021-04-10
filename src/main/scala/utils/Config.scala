@@ -10,9 +10,9 @@ object Config {
   val httpHost: String = httpConfig.getString("host")
   val httpPort: Int    = httpConfig.getInt("port")
 
-  val reservationAdvanceMinutes = cinemaConfig.getInt("reservationAdvanceMinutes")
-  val reservationDays           = cinemaConfig.getInt("reservationDays")
-  val childPrice                = cinemaConfig.getDouble("prices.child")
-  val studentPrice              = cinemaConfig.getDouble("prices.student")
-  val adultPrice                = cinemaConfig.getDouble("prices.adult")
+  val reservationAdvanceMinutes: Int = cinemaConfig.getInt("reservationAdvanceMinutes")
+  val reservationDays: Int           = cinemaConfig.getInt("reservationDays")
+  val childPrice: Double             = cinemaConfig.getDouble("prices.child")
+  val studentPrice: Double           = cinemaConfig.getDouble("prices.student")
+  val adultPrice: Double             = cinemaConfig.getDouble("prices.adult")
 }

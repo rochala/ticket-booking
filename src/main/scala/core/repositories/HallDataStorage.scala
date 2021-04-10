@@ -6,16 +6,8 @@ import utils.DatabaseConnector
 
 import scala.concurrent.{ExecutionContext, Future}
 
-sealed trait HallDataStorage {
-  def getHalls: Future[Seq[Hall]]
-
-  def getHall(id: Long): Future[Option[Hall]]
-
-}
-
-class DBHallDataStorage(val databaseConnector: DatabaseConnector)(implicit executionContext: ExecutionContext)
-    extends HallDataTable
-    with HallDataStorage {
+class HallDataStorage(val databaseConnector: DatabaseConnector)(implicit executionContext: ExecutionContext)
+    extends HallDataTable {
 
   import databaseConnector._
   import databaseConnector.profile.api._

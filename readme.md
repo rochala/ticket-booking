@@ -15,7 +15,8 @@ Besides akka-http I used following libraries, technologies:
 * *slick* for database connection,
 * *circe* for json parsing,
 * *posgresql* as database server,
-* *scalatest* for unit testing.
+* *scalatest* for unit testing,
+* *cats* for validation,
 
 
 ## Installing
@@ -34,24 +35,8 @@ Besides akka-http I used following libraries, technologies:
 1. **Checkout to development branch**
 ```git checkout development```
 1. **Database configuration**
-You can either use external database hosted on my server ( configuration is provided in email ) and skip next sections or
-host it locally on your machine.
-**Initializing postgreSQL on local machine**
-    1. Create new user:
-    ```createuser $name -P --interactive```
-    1. Create new database:
-    ```create database $databasename```
-    1. Connect to new database:
-    ```\connect $newdatabase```
-    1. Run initializatin script:
-    ```\i init.sql```
-    1. Grant privileges to created user:
-    ```
-    Grant usage, select on all sequences in schema public to $user;
-    Grant all on all tables in schema public to $user;
-    ```
-
-1. **Configure database connection in src/main/resources/application.conf file**
+```docker-compose up```
+1. **[Optional] Configure database connection in src/main/resources/application.conf file**
 ```nvim src/main/resources/application.conf```
 1. **Run tests**
 ```sbt test```
@@ -60,7 +45,7 @@ host it locally on your machine.
 
 
 ## API
-API tests are provided in test_api.sh shell script.
+Default use case scenario is in shell script *test-api.sh*
 
 ### Screening data
 ```
@@ -72,7 +57,6 @@ http://localhost:8080/api/hall/${ID}
 
 http://localhost:8080/api/screenings
 http://localhost:8080/api/screening/${ID}
-http://localhost:8080/api/screening/${TIMESTAMP}/${TIMESTAMP}
 http://localhost:8080/api/screening/${STRING DATETIME}/${STRING DATETIME}
 http://localhost:8080/api/screening/details/${ID}
 ```

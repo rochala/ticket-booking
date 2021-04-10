@@ -3,13 +3,7 @@
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
-import core.repositories.{
-  DBHallDataStorage,
-  DBMovieDataStorage,
-  DBReservationStorage,
-  DBScreeningStorage,
-  DBSeatStorage
-}
+import core.repositories.{HallDataStorage, MovieDataStorage, ReservationStorage, ScreeningStorage, SeatStorage}
 import http.HttpRoute
 import utils._
 
@@ -26,19 +20,19 @@ object Boot extends App {
 
     val databaseConnector = new DatabaseConnector()
 
-    val hallDataStorage = new DBHallDataStorage(databaseConnector)
+    val hallDataStorage = new HallDataStorage(databaseConnector)
     val hallsService    = new HallDataService(hallDataStorage)
 
-    val movieDataStorage = new DBMovieDataStorage(databaseConnector)
+    val movieDataStorage = new MovieDataStorage(databaseConnector)
     val movieService     = new MovieDataService(movieDataStorage)
 
-    val seatStorage = new DBSeatStorage(databaseConnector)
+    val seatStorage = new SeatStorage(databaseConnector)
     val seatService = new SeatService(seatStorage)
 
-    val screeningDataStorage = new DBScreeningStorage(databaseConnector)
+    val screeningDataStorage = new ScreeningStorage(databaseConnector)
     val screeningService     = new ScreeningService(screeningDataStorage, seatStorage)
 
-    val reservationStorage = new DBReservationStorage(databaseConnector)
+    val reservationStorage = new ReservationStorage(databaseConnector)
     val reservationService = new ReservationService(reservationStorage, seatStorage, screeningDataStorage)
 
     val httpRoute = new HttpRoute(hallsService, movieService, screeningService, reservationService, seatService)

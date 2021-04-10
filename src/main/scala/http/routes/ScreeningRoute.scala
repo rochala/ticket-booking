@@ -16,8 +16,7 @@ import java.time.LocalDateTime
 import core.services.ScreeningService
 
 class ScreeningRoute(screeningService: ScreeningService)(implicit
-    executionContext: ExecutionContext,
-    timeEncoder: Encoder[Time]
+    executionContext: ExecutionContext
 ) extends FailFastCirceSupport {
 
   import StatusCodes._
@@ -59,7 +58,12 @@ class ScreeningRoute(screeningService: ScreeningService)(implicit
       path(Segment / Segment) { (start, end) =>
         pathEndOrSingleSlash {
           get {
-            complete(screeningSchedule(LocalDateTime.parse(start), LocalDateTime.parse(end)).map(_.asJson))
+            complete(screeningSchedule(start, end).map {
+              case Some(movieSchedulde) =>
+                OK -> movieSchedulde.asJson
+              case None =>
+                BadRequest -> "Illegal date values".asJson
+            })
           }
         }
       }

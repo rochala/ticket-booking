@@ -8,12 +8,12 @@ import akka.http.scaladsl.server.Route
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import io.circe.Encoder
 import io.circe.generic.auto._
-import core.Status
 import io.circe.syntax._
 
 import scala.concurrent.ExecutionContext
 import java.time.LocalDateTime
 
+import core.Status
 import io.circe.Decoder
 import io.circe.Json
 import io.circe.HCursor

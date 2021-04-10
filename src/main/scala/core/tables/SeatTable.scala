@@ -25,7 +25,7 @@ private[core] trait SeatTable extends ReservationTable {
 
     def price = column[BigDecimal]("price")
 
-    def reservation = foreignKey("reservation_fk", reservationID, TableQuery[Reservations])(_.id)
+    def reservation = foreignKey("reservation_fk", reservationID, TableQuery[Reservations])(_.id, onDelete=ForeignKeyAction.Cascade)
   }
 
 }

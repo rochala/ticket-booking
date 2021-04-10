@@ -8,19 +8,8 @@ import utils.DatabaseConnector
 
 import scala.concurrent.{ExecutionContext, Future}
 
-sealed trait ScreeningStorage {
-  def getScreenings: Future[Seq[Screening]]
-
-  def getScreening(id: Long): Future[Option[Screening]]
-
-  def getMoviesScreenings(startDate: LocalDateTime, endDate: LocalDateTime): Future[Seq[(Movie, Long, LocalDateTime)]]
-
-  def getScreeningDetails(id: Long): Future[Option[(Screening, Movie, Hall)]]
-}
-
-class DBScreeningStorage(val databaseConnector: DatabaseConnector)(implicit executionContext: ExecutionContext)
-    extends ScreeningTable
-    with ScreeningStorage {
+class ScreeningStorage(val databaseConnector: DatabaseConnector)(implicit executionContext: ExecutionContext)
+    extends ScreeningTable {
 
   import databaseConnector._
   import databaseConnector.profile.api._

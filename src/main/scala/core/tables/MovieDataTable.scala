@@ -1,10 +1,9 @@
 package core.tables
 
-import java.sql.Time
-
 import core.Movie
 import slick.sql.SqlProfile.ColumnOption.SqlType
 import utils.DatabaseConnector
+import java.time.LocalTime
 
 private[core] trait MovieDataTable {
 
@@ -23,7 +22,7 @@ private[core] trait MovieDataTable {
 
     def title = column[String]("title")
 
-    def duration = column[Time]("duration", SqlType("TIME NOT NULL"))
+    def duration = column[LocalTime]("duration", SqlType("TIME NOT NULL"))
   }
 
 }

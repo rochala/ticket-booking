@@ -6,18 +6,8 @@ import utils.DatabaseConnector
 
 import scala.concurrent.{ExecutionContext, Future}
 
-sealed trait MovieDataStorage {
-  def getMovies: Future[Seq[Movie]]
-
-  def getMovie(id: Long): Future[Option[Movie]]
-
-  def saveMovie(movie: Movie): Future[Movie]
-
-}
-
-class DBMovieDataStorage(val databaseConnector: DatabaseConnector)(implicit executionContext: ExecutionContext)
-    extends MovieDataTable
-    with MovieDataStorage {
+class MovieDataStorage(val databaseConnector: DatabaseConnector)(implicit executionContext: ExecutionContext)
+    extends MovieDataTable {
 
   import databaseConnector._
   import databaseConnector.profile.api._

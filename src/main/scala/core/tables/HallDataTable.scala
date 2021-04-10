@@ -22,5 +22,4 @@ private[core] trait HallDataTable {
 
     def columns = column[Int]("column_num")
   }
-
 }

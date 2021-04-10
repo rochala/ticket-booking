@@ -7,6 +7,7 @@ import core.Hall
 import java.time.LocalDateTime
 import core.services.ReservationValidationService
 import core.services.ReservationService.mapTicketType
+import utils.Config.reservationAdvanceMinutes
 
 class ReservationSpec extends AnyFlatSpec {
   "Name" should "start with capital letter" in {
@@ -47,15 +48,14 @@ class ReservationSpec extends AnyFlatSpec {
   }
 
   //screeningID = 1 Timestamp is 2021-04-29 15:00:00
-  "Reservation time" should "be possible at least 15:00 minutes before screening" in {
+  "Reservation time" should s"be possible at least $reservationAdvanceMinutes minutes before screening" in {
     val screeningTime = LocalDateTime.parse("2021-04-29T15:00:00")
-    assert(!validateReservationTime(LocalDateTime.parse("2021-04-29T15:00:00"), screeningTime))
-    assert(!validateReservationTime(LocalDateTime.parse("2021-04-29T14:59:59"), screeningTime))
-    assert(!validateReservationTime(LocalDateTime.parse("2021-04-29T15:00:01"), screeningTime))
-    assert(validateReservationTime(LocalDateTime.parse("2021-04-29T14:44:59"), screeningTime))
-    assert(!validateReservationTime(LocalDateTime.parse("2021-04-29T14:45:00"), screeningTime))
-    assert(validateReservationTime(LocalDateTime.parse("2021-04-20T14:45:00"), screeningTime))
-    assert(!validateReservationTime(LocalDateTime.parse("2021-08-21T14:45:00"), screeningTime))
+    assert(!validateReservationTime(screeningTime, screeningTime))
+    assert(!validateReservationTime(screeningTime.plusNanos(1), screeningTime))
+    assert(!validateReservationTime(screeningTime.minusMinutes(reservationAdvanceMinutes), screeningTime))
+    assert(validateReservationTime(screeningTime.minusMinutes(reservationAdvanceMinutes).minusNanos(1), screeningTime))
+    assert(validateReservationTime(screeningTime.minusMinutes(reservationAdvanceMinutes).minusDays(1), screeningTime))
+    assert(!validateReservationTime(screeningTime.minusMinutes(reservationAdvanceMinutes).plusNanos(1), screeningTime))
   }
 
   "Rows" should "not allow to have single space between 2 reserved seats" in {
@@ -63,7 +63,6 @@ class ReservationSpec extends AnyFlatSpec {
       Seat(None, 0, 0, 0, 18.0),
       Seat(None, 0, 0, 3, 18.0)
     )
-    val hall = Hall(None, "TestHall", 18, 30)
     assert(validateRowsSpacing(List(Seat(None, 0, 0, 10, 0.0)), takenSeats).isValid)
     assert(validateRowsSpacing(List(Seat(None, 0, 0, 4, 0.0)), takenSeats).isValid)
     assert(validateRowsSpacing(List(Seat(None, 0, 0, 8, 0.0), Seat(None, 0, 0, 9, 0.0)), takenSeats).isValid)

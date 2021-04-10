@@ -39,50 +39,49 @@ class ReservationService(
     } yield (screeningData, takenSeats)
 
     data.map { data =>
-      if (data._1.isEmpty) None
+      if (data._1.isEmpty) Left("Screening does not exist")
+      else {
+        val screeningData = data._1.get
+        val takenSeats    = data._2
 
-      val screeningData = data._1.get
-      val takenSeats    = data._2
+        val reservationTime = LocalDateTime.now()
+        val paymentTime =
+          if (reservationTime.plusDays(reservationDays).isBefore(screeningData._1.screeningTime))
+            reservationTime.plusDays(reservationDays)
+          else screeningData._1.screeningTime
 
-      val reservationTime = LocalDateTime.now()
-      val paymentTime =
-        if (reservationTime.plusDays(reservationDays).isBefore(screeningData._1.screeningTime))
-          reservationTime.plusDays(reservationDays)
-        else screeningData._1.screeningTime
+        val seatsWithoutID =
+          reservationForm.seats.map(s => Seat(None, 0, s.row, s.index, ReservationService.mapTicketType(s.ticketType)))
 
-      val seatsWithoutID =
-        reservationForm.seats.map(s => Seat(None, 0, s.row, s.index, ReservationService.mapTicketType(s.ticketType)))
-
-      ReservationValidatorNec
-        .validateReservation(
-          reservationForm,
-          seatsWithoutID,
-          takenSeats,
-          screeningData._3
-        ) match {
-        case Valid(reservation) => {
-          val newReservation = Reservation(
-            None,
-            reservation.screeningID,
-            reservation.name,
-            reservation.surname,
-            reservationTime,
-            Status.Unpaid
-          )
-          seatStorage.fullReservationSave(newReservation, seatsWithoutID)
-
-          Right(
-            ReservationSummary(
+        ReservationValidatorNec
+          .validateReservation(
+            reservationForm,
+            seatsWithoutID,
+            takenSeats,
+            screeningData._3
+          ) match {
+          case Valid(reservation) =>
+            val newReservation = Reservation(
+              None,
+              reservation.screeningID,
               reservation.name,
               reservation.surname,
-              seatsWithoutID.foldLeft(BigDecimal(0, 2))(_ + _.price),
-              paymentTime,
-              reservation.seats
+              reservationTime,
+              Status.Unpaid
             )
-          )
+            seatStorage.fullReservationSave(newReservation, seatsWithoutID)
 
+            Right(
+              ReservationSummary(
+                reservation.name,
+                reservation.surname,
+                seatsWithoutID.foldLeft(BigDecimal(0, 2))(_ + _.price),
+                paymentTime,
+                reservation.seats
+              )
+            )
+          case Invalid(failures) => Left(failures.iterator.map(_.errorMessage).mkString(", "))
         }
-        case Invalid(failures) => Left(failures.iterator.map(_.errorMessage).mkString(",\n "))
       }
     }
   }

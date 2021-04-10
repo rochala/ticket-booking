@@ -14,8 +14,7 @@ import io.circe.syntax._
 import scala.concurrent.ExecutionContext
 
 class MovieRoute(movieService: MovieDataService)(implicit
-    executionContext: ExecutionContext,
-    dateEncoder: Encoder[Time]
+    executionContext: ExecutionContext
 ) extends FailFastCirceSupport {
 
   import StatusCodes._

@@ -2,7 +2,10 @@ package core.tables
 
 import java.time.LocalDateTime
 
+import core.Status.Status
 import core.{Reservation, Status}
+import slick.ast.BaseTypedType
+import slick.jdbc.JdbcType
 import utils.DatabaseConnector
 
 private[core] trait ReservationTable extends ScreeningTable {
@@ -13,10 +16,11 @@ private[core] trait ReservationTable extends ScreeningTable {
 
   protected val reservations = TableQuery[Reservations]
 
-  implicit val statusColumnType = MappedColumnType.base[Status.Status, String](
-    enum => enum.toString,
-    string => Status.withName(string)
-  )
+  implicit val statusColumnType: JdbcType[Status] with BaseTypedType[Status] =
+    MappedColumnType.base[Status.Status, String](
+      enum => enum.toString,
+      string => Status.withName(string)
+    )
 
   class Reservations(tag: Tag) extends Table[Reservation](tag, "reservations") {
     override def * =

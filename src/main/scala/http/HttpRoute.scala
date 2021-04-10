@@ -19,13 +19,6 @@ class HttpRoute(
     reservationService: ReservationService,
     seatService: SeatService
 )(implicit executionContext: ExecutionContext) {
-
-  implicit val TimeFormat: Encoder[Time] with Decoder[Time] = new Encoder[Time] with Decoder[Time] {
-    override def apply(a: Time): Json = Encoder.encodeString.apply(a.toString)
-
-    override def apply(c: HCursor): Decoder.Result[Time] = Decoder.decodeString.map(s => Time.valueOf(s)).apply(c)
-  }
-
   private val hallsRouter        = new HallRoute(hallService)
   private val moviesRouter       = new MovieRoute(movieService)
   private val screeningsRouter   = new ScreeningRoute(screeningService)
@@ -33,13 +26,20 @@ class HttpRoute(
   private val seatsRouter        = new SeatRoute(seatService)
 
   val route: Route =
-    pathPrefix("api") {
-      concat(
-        hallsRouter.route,
-        moviesRouter.route,
-        screeningsRouter.route,
-        reservationsRouter.route,
-        seatsRouter.route
-      )
-    }
+    concat(
+      pathPrefix("api") {
+        concat(
+          hallsRouter.route,
+          moviesRouter.route,
+          screeningsRouter.route,
+          reservationsRouter.route,
+          seatsRouter.route
+        )
+      },
+      pathPrefix("healthcheck") {
+        get {
+          complete("OK")
+        }
+      }
+    )
 }

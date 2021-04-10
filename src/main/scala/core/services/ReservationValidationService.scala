@@ -11,12 +11,8 @@ import scala.annotation.tailrec
 import scala.util.matching.Regex
 
 object ReservationValidationService {
-  def validateReservationTime(
-      reservationTime: LocalDateTime,
-      screeningTime: LocalDateTime
-  ): Boolean = {
-    (reservationTime.plusMinutes(reservationAdvanceMinutes).isBefore(screeningTime))
-  }
+  def validateReservationTime(reservationTime: LocalDateTime, screeningTime: LocalDateTime): Boolean =
+    reservationTime.plusMinutes(reservationAdvanceMinutes).isBefore(screeningTime)
 
   val nameRegex: Regex = """^\p{Lu}[\p{L}&&[^\p{Lu}]]{2,}(-\p{Lu}[\p{L}&&[^\p{Lu}]]{2,})?""".r
 
@@ -95,7 +91,7 @@ object ReservationValidationService {
 
     def validateSeatAvailability(seats: List[Seat], takenSeats: Seq[Seat]): ValidationResult[List[Seat]] = {
       val mergedSeats = takenSeats ++ seats
-      if (mergedSeats.distinctBy(s => (s.row, s.index)) == mergedSeats) return seats.validNec
+      if (mergedSeats.distinctBy(s => (s.row, s.index)) == mergedSeats) seats.validNec
       else SeatsAlreadyTaken.invalidNec
     }
 
