@@ -23,7 +23,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka"      %% "akka-http-testkit"        % akkaHttpVersion % Test,
   "com.typesafe.akka"      %% "akka-actor-testkit-typed" % akkaVersion     % Test,
   "org.scalatest"          %% "scalatest"                % "3.2.7"         % Test,
-  "org.scalatestplus"      %% "mockito-3-4"              % "3.2.7.0"       % "test",
+  "org.scalatestplus"      %% "mockito-3-4"              % "3.2.7"         % Test,
   "io.circe"               %% "circe-core"               % circeVersion,
   "io.circe"               %% "circe-generic"            % circeVersion,
   "io.circe"               %% "circe-parser"             % circeVersion,
