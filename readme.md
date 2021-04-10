@@ -10,6 +10,7 @@ Ticket booking system build with akka-http.
 ## About
 This system was build with akka-http high level API. I made following assumptions in this project:
 * each row in screening room has same number of seats
+* no authentication
 
 Besides akka-http I used following libraries, technologies:
 * *slick* for database connection,
@@ -38,10 +39,12 @@ Besides akka-http I used following libraries, technologies:
 ```docker-compose up```
 1. **[Optional] Configure database connection in src/main/resources/application.conf file**
 ```nvim src/main/resources/application.conf```
-1. **Run tests**
+1. **[Optional] Run unit tests**
 ```sbt test```
 1. **Start project**
 ```sbt run```
+1. **[Optional] Run test script *test_api.sh* (Beware, one time use only without changes to seats)**
+```sh test_api.sh```
 
 
 ## API
@@ -63,7 +66,7 @@ http://localhost:8080/api/screening/details/${ID}
 
 ### Reservation POST
 ```
-http://localhost:8080/api/reservation
+http://localhost:8080/api/reservations
 ```
 
 
